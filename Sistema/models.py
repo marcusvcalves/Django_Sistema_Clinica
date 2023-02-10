@@ -8,13 +8,14 @@ class Paciente(models.Model):
     cpf = CPFField('cpf')
     cep = models.CharField(max_length=100, blank=True)
     address = models.CharField(max_length=100, blank=True)
-    dateOfBirth = models.DateField(blank=True)
+    birthDate = models.DateField(blank=True, null=True)
     GENDER = (
         ('M', 'Masculino'),
         ('F', 'Feminino'),
     )
-    gender = models.CharField(max_length=1, choices=GENDER, blank=True)
+    gender = models.CharField(
+        max_length=1, choices=GENDER, blank=True, null=True)
 
     def __str__(self):
-        template = '{0.name}, {0.phone}, {0.cpf}, {0.cep},  {0.address}, {0.dateOfBirth}, {0.gender}'
+        template = '{0.name}, {0.phone}, {0.cpf}, {0.cep},  {0.address}, {0.birthDate}, {0.gender}'
         return template.format(self)

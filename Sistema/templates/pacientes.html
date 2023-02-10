@@ -8,6 +8,8 @@
       crossorigin="anonymous"
     />
     {% load static %}
+    {% block content %}
+
 
     <link rel="stylesheet" href="{% static 'css/paciente.css' %}" />
   </head>
@@ -38,7 +40,6 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-4"></div>
-        <div class="col"><h1 class="text-danger">Editar Pacientes</h1></div>
       </div>
       <div class="row">
         <div class="col-md-4">
@@ -105,12 +106,7 @@
               </div>
               <div class="mb-3">
                 <label for="patientBirth">Data de Nascimento:</label>
-                <input
-                  name="patientBirth"
-                  class="form-control"
-                  type="date"
-                  required
-                />
+                <input name="patientBirth" class="form-control" type="date" />
               </div>
               <p>Gênero:</p>
               <div class="form-check">
@@ -137,9 +133,8 @@
                   Feminino
                 </label>
               </div>
-              <button type="submit" class="btn btn-primary" value="Paciente">
-                Salvar
-              </button>
+              <input type="submit" class="btn btn-primary" value="Enviar">
+            </input>
             </form>
           </div>
         </div>
@@ -157,12 +152,14 @@
             </tr>
             {% for paciente in pacientes %}
             <tr>
-              <td>{{paciente.name}}</td>
+              <td>
+                <a href="{% url 'editar_usuario' paciente.id %}">{{paciente.name}}</a>
+              </td>
               <td>{{paciente.phone}}</td>
               <td>{{paciente.cpf}}</td>
               <td>{{paciente.cep}}</td>
               <td>{{paciente.address}}</td>
-              <td>{{paciente.dateOfBirth}}</td>
+              <td>{{paciente.birthDate}}</td>
               <td>{{paciente.gender}}</td>
             </tr>
             {% endfor %}
@@ -171,4 +168,5 @@
       </div>
     </div>
   </body>
+  {% endblock %}
 </html>
