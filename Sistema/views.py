@@ -1,6 +1,5 @@
 from .models import Paciente
-from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
@@ -74,6 +73,11 @@ def editar_usuario(request, paciente_id):
                 paciente.birthDate = request.POST.get('patientBirth')
             paciente.gender = request.POST.get('patientGender')
             paciente.save()
-
             return HttpResponseRedirect('/pacientes')
     return render(request, "editar.html", {'paciente': paciente})
+
+
+def excluir_usuario(request, paciente_id):
+    paciente = Paciente.objects.filter(id=paciente_id)
+    paciente.delete()
+    return HttpResponseRedirect('/pacientes')
