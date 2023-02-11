@@ -1,3 +1,17 @@
 button{
     margin-top:5%;
 }
+.listaPacientes{
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+}
+nav{
+    display:flex;
+}
+.adicionarPacientes h2{
+    text-align: center;
+}
+.search{
+    float:right;
+}
