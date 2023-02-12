@@ -81,3 +81,8 @@ def excluir_usuario(request, paciente_id):
     paciente = Paciente.objects.filter(id=paciente_id)
     paciente.delete()
     return HttpResponseRedirect('/pacientes')
+
+
+def confirmar_exclusao(request, paciente_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    return render(request, "confirmar.html", {'paciente': paciente})

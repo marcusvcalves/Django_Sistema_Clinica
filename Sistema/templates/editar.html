@@ -99,7 +99,7 @@
         <label for="patientBirth">Data de Nascimento:</label>
         <input
           name="patientBirth"
-          value="{{paciente.birthDate}}"
+          value="{{paciente.birthDate|date:'Y-m-d'}}"
           class="form-control"
           type="date"
         />
@@ -112,6 +112,7 @@
           name="patientGender"
           value="M"
           id="RadioButtonMale"
+          {% if paciente.gender == 'M' %}checked{% endif %}
         />
         <label class="form-check-label" for="flexRadioDefault1">
           Masculino
@@ -124,6 +125,7 @@
           name="patientGender"
           value="F"
           id="RadioButtonFemale"
+          {% if paciente.gender == 'F' %}checked{% endif %}
         />
         <label class="form-check-label" for="flexRadioDefault2">
           Feminino
@@ -137,7 +139,7 @@
         value="Voltar"
       />
       <a
-        href="{% url 'excluir_usuario' paciente.id %}"
+        href="{% url 'confirmar_exclusao' paciente.id %}"
         id="delete-user-link"
         data-user-id="{{ user.id }}"
       >

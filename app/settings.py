@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 STATIC_URL = '/Sistema/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static/"),
+
 )
 
 MIDDLEWARE = [
