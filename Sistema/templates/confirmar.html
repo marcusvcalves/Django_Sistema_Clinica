@@ -48,14 +48,10 @@
       <input
         type="button"
         class="btn btn-primary"
-        onclick="window.location.href='/pacientes';"
+        onclick="window.location.href='/pacientes'"
         value="Voltar"
       />
-      <a
-        href="{% url 'excluir_usuario' paciente.id %}"
-        id="delete-user-link"
-        data-user-id="{{ user.id }}"
-      >
+      <a href="{% url 'excluir_usuario' paciente.id %}" id="delete-user-link" data-user-id="{{ user.id }}">
         <input type="button" class="btn btn-danger" value="Excluir" />
       </a>
     </section>

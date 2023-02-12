@@ -19,3 +19,25 @@ class Paciente(models.Model):
     def __str__(self):
         template = '{0.name}, {0.phone}, {0.cpf}, {0.cep},  {0.address}, {0.birthDate}, {0.gender}'
         return template.format(self)
+
+
+class Receita(models.Model):
+    date = models.DateField(auto_now_add=True)
+    value = models.DecimalField(max_digits=12,decimal_places=3)
+    professional = models.CharField(max_length=100)
+    desc = models.CharField(max_length=300)
+    pago = models.BooleanField(default=False)
+
+    def __str__(self):
+        template = '{0.date}, {0.value}, {0.professional}, {0.desc},  {0.pago}'
+        return template.format(self)
+
+class Despesa(models.Model):
+    date = models.DateField(auto_now_add=True)
+    value = models.DecimalField(max_digits=12,decimal_places=3)
+    professional = models.CharField(max_length=100)
+    desc = models.CharField(max_length=300)
+
+    def __str__(self):
+        template = '{0.date}, {0.value}, {0.professional}, {0.desc}'
+        return template.format(self)

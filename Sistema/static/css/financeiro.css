@@ -1,0 +1,11 @@
+
+.content{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 2%;
+}
+
+.buttonReceita, .buttonDespesa{
+    height: 5em;
+    width: 10em;
+}
