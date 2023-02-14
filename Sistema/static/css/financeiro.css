@@ -1,11 +1,23 @@
 
-.content{
+.wrapper{
     display: flex;
-    justify-content: space-evenly;
-    margin-top: 2%;
+}
+.containerReceita{
+    display: flex;
+    flex-direction: column;
+
 }
 
-.buttonReceita, .buttonDespesa{
+.containerReceita, .containerDespesa{
+    padding-top: 2%;
+}
+
+.buttonReceita, .buttonDespesa, .buttonHistoricoReceita, .buttonHistoricoDespesa {
     height: 5em;
     width: 10em;
+}
+
+.containerDespesa{
+    display: flex;
+    flex-direction: column;
 }

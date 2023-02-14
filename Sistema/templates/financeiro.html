@@ -35,8 +35,9 @@
       </div>
     </nav>
     <div class="wrapper">
-      <div class="container-fluid content" >
+      <div class="container-fluid containerReceita" >
         <button type="button" class="btn btn-success buttonReceita" data-bs-toggle="modal" data-bs-target="#modalReceita"><i class="fa-solid fa-plus"></i> Nova Receita</button>
+        <button type="button" class="btn btn-success buttonHistoricoReceita"><i class="fa-solid fa-calendar-days"></i> Histórico das Receitas</button>
         <div class="modal fade" id="modalReceita" tabindex="-1" aria-labelledby="modalReceita" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -45,38 +46,58 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form action="" method="POST">
+                <form action="{% url 'cadastrar_receita' %}" method="POST">
                   {% csrf_token %} 
                   <div class="mb-3">
-                    <label for="dataLancamento" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="dataDaReceita" aria-describedby="dataReceita" value="{{date.today}}">
+                    <label for="dataReceita" class="form-label">Data</label>
+                    <input type="date" class="form-control" id="dataReceita" aria-describedby="dataReceita" value="">
                   </div>
                   <div class="mb-3">
-                    <label for="valorLancamento" class="form-label">Valor</label>
-                    <input type="number" class="form-control" id="valorReceita" aria-describedby="valorReceita">
+                    <label for="valorReceita" class="form-label">Valor</label>
+                    <input type="number" step="0.01" class="form-control" id="valorReceita" aria-describedby="valorReceita">
                   </div>
                   <div class="mb-3">
-                    <label for="profissionalLancamento" class="form-label">Profissional</label>
+                    <label for="profissionalReceita" class="form-label">Profissional</label>
                     <input type="text" class="form-control" id="profissionalReceita" aria-describedby="profissionalReceita">
                   </div>
                   <div class="mb-3">
-                    <label for="descricaoLancamento" class="form-label">Descrição</label>
+                    <label for="descricaoReceita" class="form-label">Descrição</label>
                     <input type="text" class="form-control" id="descricaoReceita" aria-describedby="descricaoReceita">
                   </div>
                   <div>
                     <input type="checkbox" id="pagoReceita" name="pago">
-                    <label for="pago">Pago</label>
+                    <label for="pagoReceita">Pago</label>
                   </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Salvar</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-              </div>
+                </div>
+                <div class="modal-footer">
+                  <input type="submit" class="btn btn-primary" value="Salvar">
+                  <input type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="Fechar">
+                </div>
+              </form>
             </div>
           </div>
         </div>
+          <div class="col-md-6 listaReceita">
+            <div><h2 class="text-primary">Receita Mensal</h2></div>
+            <table class="table table table-striped table-hover">
+              <tr class="table-dark">
+                <th>Data</th>
+                <th>Valor</th>
+                <th></th>
+              </tr>
+              {% for r in receita %}
+              <tr>
+                <td>{{r.date}}</td>
+                <td>{{r.value}}</td>
+                <td>Mais Detalhes</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+      </div>
+      <div class="container-fluid containerDespesa">
         <button type="button" class="btn btn-danger buttonDespesa" data-bs-toggle="modal" data-bs-target="#modalDespesa"><i class="fa-solid fa-minus"></i> Nova Despesa</button>
+        <button type="button" class="btn btn-danger button buttonHistoricoDespesa"><i class="fa-solid fa-calendar-days"></i> Histórico das Despesas</button>
         <div class="modal fade" id="modalDespesa" tabindex="-1" aria-labelledby="modalDespesa" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -88,20 +109,20 @@
                 <form action="" method="POST">
                   {% csrf_token %} 
                   <div class="mb-3">
-                    <label for="dataLancamento" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="dataDaReceita" aria-describedby="dataReceita" value="{{date.today}}">
+                    <label for="dataDespesa" class="form-label">Data</label>
+                    <input type="date" class="form-control" id="dataDespesa" aria-describedby="dataDespesa" value="">
                   </div>
                   <div class="mb-3">
-                    <label for="valorLancamento" class="form-label">Valor</label>
-                    <input type="number" class="form-control" id="valorReceita" aria-describedby="valorReceita">
+                    <label for="valorDespesa" class="form-label">Valor</label>
+                    <input type="number" class="form-control" id="valorDespesa" aria-describedby="valorDespesa">
                   </div>
                   <div class="mb-3">
-                    <label for="profissionalLancamento" class="form-label">Profissional</label>
-                    <input type="text" class="form-control" id="profissionalReceita" aria-describedby="profissionalReceita">
+                    <label for="profissionalDespesa" class="form-label">Profissional</label>
+                    <input type="text" class="form-control" id="profissionalDespesa" aria-describedby="profissionalDespesa">
                   </div>
                   <div class="mb-3">
-                    <label for="descricaoLancamento" class="form-label">Descrição</label>
-                    <input type="text" class="form-control" id="descricaoReceita" aria-describedby="descricaoReceita">
+                    <label for="descricaoDespesa" class="form-label">Descrição</label>
+                    <input type="text" class="form-control" id="descricaoDespesa" aria-describedby="descricaoDespesa">
                   </div>
                 </form>
               </div>
@@ -111,6 +132,21 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-md-6 listaReceita">
+          <div><h2 class="text-primary">Despesa Mensal</h2></div>
+          <table class="table table table-striped table-hover">
+            <tr class="table-dark">
+              <th>Data</th>
+              <th>Valor</th>
+            </tr>
+            {% for paciente in pacientes %}
+            <tr>
+              <td>{{paciente.name}}</td>
+              <td>{{paciente.phone}}</td>
+            </tr>
+            {% endfor %}
+          </table>
         </div>
       </div>
     </div>

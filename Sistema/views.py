@@ -1,7 +1,6 @@
-from .models import Paciente
+from .models import Paciente, Receita, Despesa, Caixa
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
 
 
 # Create your views here.
@@ -25,11 +24,13 @@ def pacientes(request):
     pacientes = Paciente.objects.all()
     return render(request, "pacientes.html", {"pacientes": pacientes})
 
+
 # @login_required
 
 
-def financeiro(request):
-    return render(request, "financeiro.html")
+    #despesa = get_object_or_404(Despesa, id=despesa_id)
+    #caixa = get_object_or_404(Caixa, id=caixa_id)
+    #return render(request, "financeiro.html", {'receita': receita}, {'despesa': despesa}, {'caixa': caixa})
 
 # @login_required
 
@@ -86,3 +87,24 @@ def excluir_usuario(request, paciente_id):
 def confirmar_exclusao(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     return render(request, "confirmar.html", {'paciente': paciente})
+
+
+
+def financeiro(request):
+    receita = Receita.objects.all()
+    return render(request, "financeiro.html", {"receita": receita})
+
+def cadastrar_receita(request):
+    if request.method == 'POST':
+        receita = Receita()
+        receita.date = request.POST.get('dataReceita')
+        receita.value = request.POST.get('valorReceita')
+        receita.professional = request.POST.get('profissionalReceita')
+        receita.desc = request.POST.get('descricaoReceita')
+        receita.pago = request.POST.get('pagoReceita')
+        receita.save()
+            
+        return HttpResponseRedirect('/financeiro')
+        
+    else:
+        return HttpResponseRedirect('/financeiro')

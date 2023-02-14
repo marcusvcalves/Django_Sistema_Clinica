@@ -22,21 +22,29 @@ class Paciente(models.Model):
 
 
 class Receita(models.Model):
-    date = models.DateField(auto_now_add=True)
-    value = models.DecimalField(max_digits=12,decimal_places=3)
-    professional = models.CharField(max_length=100)
-    desc = models.CharField(max_length=300)
-    pago = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
+    value = models.DecimalField(max_digits=12,decimal_places=2)
+    professional = models.CharField(max_length=100, blank=True, null=True)
+    desc = models.CharField(max_length=300, blank=True, null=True)
+    pago = models.BooleanField(default=False, blank=True, null=True)
 
     def __str__(self):
         template = '{0.date}, {0.value}, {0.professional}, {0.desc},  {0.pago}'
         return template.format(self)
 
 class Despesa(models.Model):
-    date = models.DateField(auto_now_add=True)
-    value = models.DecimalField(max_digits=12,decimal_places=3)
+    date = models.DateTimeField(auto_now_add=True)
+    value = models.DecimalField(max_digits=12,decimal_places=2)
     professional = models.CharField(max_length=100)
     desc = models.CharField(max_length=300)
+
+    def __str__(self):
+        template = '{0.date}, {0.value}, {0.professional}, {0.desc}'
+        return template.format(self)
+
+class Caixa(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    value = models.DecimalField(max_digits=12,decimal_places=3)
 
     def __str__(self):
         template = '{0.date}, {0.value}, {0.professional}, {0.desc}'
