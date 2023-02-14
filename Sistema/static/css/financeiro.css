@@ -5,9 +5,22 @@
 .containerReceita{
     display: flex;
     flex-direction: column;
+    text-align: center;
+    align-items: center;
 
 }
-
+.containerDespesa{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+.containerBotoesReceita, .containerBotoesDespesa{
+    display: flex;
+    justify-content: space-around;
+    width: 65%;
+    padding-bottom: 5%;
+}
 .containerReceita, .containerDespesa{
     padding-top: 2%;
 }
@@ -15,9 +28,4 @@
 .buttonReceita, .buttonDespesa, .buttonHistoricoReceita, .buttonHistoricoDespesa {
     height: 5em;
     width: 10em;
-}
-
-.containerDespesa{
-    display: flex;
-    flex-direction: column;
 }

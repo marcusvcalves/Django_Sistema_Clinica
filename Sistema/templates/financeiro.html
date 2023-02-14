@@ -36,8 +36,10 @@
     </nav>
     <div class="wrapper">
       <div class="container-fluid containerReceita" >
-        <button type="button" class="btn btn-success buttonReceita" data-bs-toggle="modal" data-bs-target="#modalReceita"><i class="fa-solid fa-plus"></i> Nova Receita</button>
-        <button type="button" class="btn btn-success buttonHistoricoReceita"><i class="fa-solid fa-calendar-days"></i> Histórico das Receitas</button>
+        <div class="containerBotoesReceita">
+          <button type="button" class="btn btn-success buttonReceita" data-bs-toggle="modal" data-bs-target="#modalReceita"><i class="fa-solid fa-plus"></i> Nova Receita</button>
+          <button type="button" class="btn btn-success buttonHistoricoReceita"><i class="fa-solid fa-calendar-days"></i> Histórico das Receitas</button>
+        </div>
         <div class="modal fade" id="modalReceita" tabindex="-1" aria-labelledby="modalReceita" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -46,26 +48,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form action="{% url 'cadastrar_receita' %}" method="POST">
+                <form action="{% url 'cadastrar_transacao' %}" method="POST" name="formReceita">
                   {% csrf_token %} 
                   <div class="mb-3">
-                    <label for="dataReceita" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="dataReceita" aria-describedby="dataReceita" value="">
-                  </div>
-                  <div class="mb-3">
                     <label for="valorReceita" class="form-label">Valor</label>
-                    <input type="number" step="0.01" class="form-control" id="valorReceita" aria-describedby="valorReceita">
+                    <input type="number" step="0.01" class="form-control" id="valorReceita" name="valorReceita" aria-describedby="valorReceita">
                   </div>
                   <div class="mb-3">
                     <label for="profissionalReceita" class="form-label">Profissional</label>
-                    <input type="text" class="form-control" id="profissionalReceita" aria-describedby="profissionalReceita">
+                    <input type="text" class="form-control" id="profissionalReceita" name="profissionalReceita" aria-describedby="profissionalReceita">
                   </div>
                   <div class="mb-3">
                     <label for="descricaoReceita" class="form-label">Descrição</label>
-                    <input type="text" class="form-control" id="descricaoReceita" aria-describedby="descricaoReceita">
+                    <input type="text" class="form-control" id="descricaoReceita" name="descricaoReceita" aria-describedby="descricaoReceita">
                   </div>
                   <div>
-                    <input type="checkbox" id="pagoReceita" name="pago">
+                    <input type="checkbox" id="pagoReceita" name="pagoReceita">
                     <label for="pagoReceita">Pago</label>
                   </div>
                 </div>
@@ -96,8 +94,10 @@
           </div>
       </div>
       <div class="container-fluid containerDespesa">
-        <button type="button" class="btn btn-danger buttonDespesa" data-bs-toggle="modal" data-bs-target="#modalDespesa"><i class="fa-solid fa-minus"></i> Nova Despesa</button>
-        <button type="button" class="btn btn-danger button buttonHistoricoDespesa"><i class="fa-solid fa-calendar-days"></i> Histórico das Despesas</button>
+        <div class="containerBotoesDespesa">
+          <button type="button" class="btn btn-danger buttonDespesa" data-bs-toggle="modal" data-bs-target="#modalDespesa"><i class="fa-solid fa-minus"></i> Nova Despesa</button>
+          <button type="button" class="btn btn-danger button buttonHistoricoDespesa"><i class="fa-solid fa-calendar-days"></i> Histórico das Despesas</button>
+      </div>
         <div class="modal fade" id="modalDespesa" tabindex="-1" aria-labelledby="modalDespesa" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -106,30 +106,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form action="" method="POST">
-                  {% csrf_token %} 
-                  <div class="mb-3">
-                    <label for="dataDespesa" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="dataDespesa" aria-describedby="dataDespesa" value="">
-                  </div>
+                <form action="{% url 'cadastrar_transacao' %}" method="POST" name="formDespesa">
+                  {% csrf_token %}
                   <div class="mb-3">
                     <label for="valorDespesa" class="form-label">Valor</label>
-                    <input type="number" class="form-control" id="valorDespesa" aria-describedby="valorDespesa">
+                    <input type="number" step="0.01" class="form-control" id="valorDespesa" aria-describedby="valorDespesa" name="valorDespesa">
                   </div>
                   <div class="mb-3">
                     <label for="profissionalDespesa" class="form-label">Profissional</label>
-                    <input type="text" class="form-control" id="profissionalDespesa" aria-describedby="profissionalDespesa">
+                    <input type="text" class="form-control" id="profissionalDespesa" aria-describedby="profissionalDespesa" name="profissionalDespesa">
                   </div>
                   <div class="mb-3">
                     <label for="descricaoDespesa" class="form-label">Descrição</label>
-                    <input type="text" class="form-control" id="descricaoDespesa" aria-describedby="descricaoDespesa">
+                    <input type="text" class="form-control" id="descricaoDespesa" aria-describedby="descricaoDespesa" name="descricaoDespesa">
                   </div>
-                </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Salvar</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <input type="submit" class="btn btn-primary" value="Salvar">
+                <input type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="Fechar">
               </div>
+            </form>
             </div>
           </div>
         </div>
@@ -139,11 +135,13 @@
             <tr class="table-dark">
               <th>Data</th>
               <th>Valor</th>
+              <th></th>
             </tr>
-            {% for paciente in pacientes %}
+            {% for d in despesa %}
             <tr>
-              <td>{{paciente.name}}</td>
-              <td>{{paciente.phone}}</td>
+              <td>{{d.date}}</td>
+              <td>{{d.value}}</td>
+              <td>Mais Detalhes</td>
             </tr>
             {% endfor %}
           </table>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import home, pacientes, agenda, financeiro, cadastrar_usuario, editar_usuario, excluir_usuario, confirmar_exclusao, cadastrar_receita
+from .views import home, pacientes, agenda, financeiro, cadastrar_usuario, editar_usuario, excluir_usuario, confirmar_exclusao, cadastrar_transacao
 
 urlpatterns = [
     path('', home),
@@ -12,5 +12,5 @@ urlpatterns = [
     path('excluir/<int:paciente_id>/', excluir_usuario, name="excluir_usuario"),
     path('confirmar/<int:paciente_id>/',
          confirmar_exclusao, name="confirmar_exclusao"),
-    path('financeiro/', cadastrar_receita, name="cadastrar_receita"),
+    path('financeiro/', cadastrar_transacao, name="cadastrar_transacao"),
 ]

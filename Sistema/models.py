@@ -35,11 +35,10 @@ class Receita(models.Model):
 class Despesa(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     value = models.DecimalField(max_digits=12,decimal_places=2)
-    professional = models.CharField(max_length=100)
-    desc = models.CharField(max_length=300)
+    desc = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
-        template = '{0.date}, {0.value}, {0.professional}, {0.desc}'
+        template = '{0.date}, {0.value}, {0.desc}'
         return template.format(self)
 
 class Caixa(models.Model):

@@ -92,19 +92,31 @@ def confirmar_exclusao(request, paciente_id):
 
 def financeiro(request):
     receita = Receita.objects.all()
-    return render(request, "financeiro.html", {"receita": receita})
+    despesa = Despesa.objects.all()
+    return render(request, "financeiro.html", {"receita": receita, "despesa": despesa})
 
-def cadastrar_receita(request):
+def cadastrar_transacao(request):
     if request.method == 'POST':
-        receita = Receita()
-        receita.date = request.POST.get('dataReceita')
-        receita.value = request.POST.get('valorReceita')
-        receita.professional = request.POST.get('profissionalReceita')
-        receita.desc = request.POST.get('descricaoReceita')
-        receita.pago = request.POST.get('pagoReceita')
-        receita.save()
+        if request.POST.get('valorReceita'):
+            receita = Receita()
+            receita.value = request.POST.get('valorReceita')
+            receita.professional = request.POST.get('profissionalReceita')
+            receita.desc = request.POST.get('descricaoReceita')
+            receita.pago = request.POST.get('pagoReceita')
+            receita.save()
             
-        return HttpResponseRedirect('/financeiro')
-        
-    else:
-        return HttpResponseRedirect('/financeiro')
+            return HttpResponseRedirect('/financeiro')
+            
+        elif request.POST.get('valorDespesa'):
+            despesa = Despesa()
+            despesa.value = request.POST.get('valorDespesa')
+            despesa.desc = request.POST.get('descricaoDespesa')
+            despesa.save()
+            
+            return HttpResponseRedirect('/financeiro')
+        else:
+            return HttpResponseRedirect('/financeiro')
+
+
+
+
