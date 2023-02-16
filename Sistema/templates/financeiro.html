@@ -95,7 +95,7 @@
           </div>
         </div>
           <div class="col-md-6 listaReceita">
-            <div><h2 class="text-primary">Receita Mensal</h2></div>
+            <div><h2 class="receitaText">Receita Mensal</h2></div>
             <table class="table table table-striped table-hover">
               <tr class="trHeader">
                 <th>Data</th>
@@ -110,6 +110,17 @@
               </tr>
               {% endfor %}
             </table>
+            <div class="paginationContainer">
+              {% if receita.has_previous %}
+              <span class="paginationFirst"><a href="?page=1">1...</a></span>
+              <a href="?page={{receita.previous_page_number}}"><i class="fa-solid fa-angles-left"></i></a>
+              {% endif %}
+              <span class="paginationText">Página {{receita.number}} de {{receita.paginator.num_pages}}</span>
+              {% if receita.has_next %}
+              <a href="?page={{receita.next_page_number}}"><i class="fa-solid fa-angles-right"></i></a>  
+              <span class="paginationLast"><a href="?page={{receita.paginator.num_pages}}">...{{receita.paginator.num_pages}}</a></span>     
+              {% endif %}
+            </div>
           </div>
       </div>
       <div class="container-fluid containerDespesa">
@@ -148,8 +159,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 listaReceita">
-          <div><h2 class="text-primary">Despesa Mensal</h2></div>
+        <div class="col-md-6 listaDespesa">
+          <div><h2 class="despesaText">Despesa Mensal</h2></div>
           <table class="table table table-striped table-hover">
             <tr class="trHeader">
               <th>Data</th>
@@ -164,6 +175,17 @@
             </tr>
             {% endfor %}
           </table>
+          <div class="paginationContainer">
+            {% if despesa.has_previous %}
+            <span class="paginationFirst"><a href="?page=1">1...</a></span>
+            <a href="?page={{despesa.previous_page_number}}"><i class="fa-solid fa-angles-left"></i></a>
+            {% endif %}
+            <span class="paginationText">Página {{despesa.number}} de {{despesa.paginator.num_pages}}</span>
+            {% if despesa.has_next %}
+            <a href="?page={{despesa.next_page_number}}"><i class="fa-solid fa-angles-right"></i></a>  
+            <span class="paginationLast"><a href="?page={{despesa.paginator.num_pages}}">...{{despesa.paginator.num_pages}}</a></span>     
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>

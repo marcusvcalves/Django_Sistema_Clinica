@@ -8,7 +8,6 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{% static 'css/financeiro.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,7 +58,7 @@
       </div>
       <div class="row">
         <div class="col-md-4 adicionarPacientes">
-          <div><h2 class="text-danger">Adicionar Paciente</h2></div>
+          <div><h2 class="adicionarText">Adicionar Paciente</h2></div>
           <div class="row">
             <form action="{% url 'cadastrar_usuario' %}" method="POST">
               {% csrf_token %}
@@ -153,7 +152,7 @@
           </div>
         </div>
         <div class="col-md-8 listaPacientes">
-          <div><h2 class="text-primary">Lista de Pacientes</h2></div>
+          <div><h2 class="listaText">Lista de Pacientes</h2></div>
           <table class="table table table-striped table-hover">
             <tr class="trHeader">
               <th>Nome</th>
@@ -178,6 +177,17 @@
             </tr>
             {% endfor %}
           </table>
+          <div class="paginationContainer">
+            {% if pacientes.has_previous %}
+            <span class="paginationFirst"><a href="?page=1">1...</a></span>
+            <a href="?page={{pacientes.previous_page_number}}"><i class="fa-solid fa-angles-left"></i></a>
+            {% endif %}
+            <span class="paginationText">Página {{pacientes.number}} de {{pacientes.paginator.num_pages}}</span>
+            {% if pacientes.has_next %}
+            <a href="?page={{pacientes.next_page_number}}"><i class="fa-solid fa-angles-right"></i></a>  
+            <span class="paginationLast"><a href="?page={{pacientes.paginator.num_pages}}">...{{pacientes.paginator.num_pages}}</a></span>     
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>

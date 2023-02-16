@@ -22,7 +22,9 @@ def agenda(request):
 
 
 def pacientes(request):
-    pacientes = Paciente.objects.all()
+    p = Paginator(Paciente.objects.all(), 10)
+    page = request.GET.get('page')
+    pacientes = p.get_page(page)
     return render(request, "pacientes.html", {"pacientes": pacientes})
 
 
@@ -92,9 +94,14 @@ def confirmar_exclusao(request, paciente_id):
 
 
 def financeiro(request):
-    receita = Receita.objects.all()
-    despesa = Despesa.objects.all()
+    pReceita = Paginator(Receita.objects.all(),5)
+    pDespesa = Paginator(Despesa.objects.all(),5)
+    page = request.GET.get('page')
+    receita = pReceita.get_page(page)
+    despesa = pDespesa.get_page(page)
+    
     return render(request, "financeiro.html", {"receita": receita, "despesa": despesa})
+
 
 def cadastrar_transacao(request):
     if request.method == 'POST':

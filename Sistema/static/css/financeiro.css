@@ -24,6 +24,17 @@
 .containerReceita, .containerDespesa{
     padding-top: 2%;
 }
+.receitaText{
+    color:#1A5EB7;
+}
+.despesaText{
+    color:#9F0000;
+}
+.listaReceita, .listaDespesa{
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+}
 
 .buttonReceita, .buttonDespesa, .buttonHistoricoReceita, .buttonHistoricoDespesa {
     height: 5em;
@@ -36,3 +47,28 @@
 th{
     color: white;
 }
+
+.paginationContainer{
+    display:flex;
+    align-self: center;
+}
+.paginationText{
+    color:#1A5EB7;
+    font-size: 1.1rem;
+}
+.fa-angles-left, .fa-angles-right, .listaText, a{
+    color:#1A5EB7;
+}
+.adicionarText{
+    color:#9F0000;
+}
+.paginationFirst{
+    padding-right:30px;
+    font-size: 1.1rem;
+}
+.paginationLast{
+    padding-left:30px;
+    font-size: 1.1rem;
+}
+
+ 
