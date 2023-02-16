@@ -1,18 +1,20 @@
-button{
-    margin-top:5%;
+.divContent{
+    padding-top:2%;
 }
 .listaPacientes{
     display:flex;
     flex-direction: column;
     text-align: center;
 }
-nav{
-    display:flex;
+.trHeader{
+    background-color: black;
 }
+th{
+    color: white;
+}
+
 .adicionarPacientes h2{
     text-align: center;
 }
-.search{
-    float:right;
-}
+
 a, a:visited { text-decoration: none; }

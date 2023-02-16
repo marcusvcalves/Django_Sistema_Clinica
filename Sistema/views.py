@@ -1,6 +1,7 @@
 from .models import Paciente, Receita, Despesa, Caixa
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.core.paginator import Paginator
 
 
 # Create your views here.

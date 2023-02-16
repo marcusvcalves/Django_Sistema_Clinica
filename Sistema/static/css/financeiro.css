@@ -29,3 +29,10 @@
     height: 5em;
     width: 10em;
 }
+
+.trHeader{
+    background-color: black;
+}
+th{
+    color: white;
+}
