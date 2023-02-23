@@ -42,9 +42,9 @@
               <a class="nav-link active" href="/agenda">Agenda</a>
           </li>
           </ul>
-          <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
-          <button type="button" class="btn btn-primary">
+          <form class="d-flex" method="get">
+          <input name = "q" class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+          <button type="submit" class="btn btn-primary">
               <i class="fas fa-search"></i>
           </button>
           </form>
@@ -53,10 +53,7 @@
   </nav>
     <div class="container-fluid divContent">
       <div class="row">
-        <div class="col-md-4"></div>
-      </div>
-      <div class="row">
-        <div class="col-md-4 adicionarPacientes">
+        <div class="col-lg-4 adicionarPacientes">
           <div><h2 class="adicionarText">Adicionar Paciente</h2></div>
           <div class="row">
             <form action="{% url 'cadastrar_usuario' %}" method="POST">
@@ -150,29 +147,21 @@
             </form>
           </div>
         </div>
-        <div class="col-md-8 listaPacientes">
+        <div class="col-lg-8 listaPacientes">
           <div><h2 class="listaText">Lista de Pacientes</h2></div>
           <table class="table table table-striped table-hover">
             <tr class="trHeader">
               <th>Nome</th>
               <th>Telefone</th>
               <th>CPF</th>
-              <th>CEP</th>
-              <th>Endereço</th>
-              <th>Data de Nascimento</th>
-              <th>Gênero</th>
+              <th></th>
             </tr>
             {% for paciente in pacientes %}
             <tr>
-              <td>
-                <a href="{% url 'editar_usuario' paciente.id %}">{{paciente.name}}</a>
-              </td>
+              <td>{{paciente.name}}</td>
               <td>{{paciente.phone}}</td>
               <td>{{paciente.cpf}}</td>
-              <td>{{paciente.cep}}</td>
-              <td>{{paciente.address}}</td>
-              <td>{{paciente.birthDate}}</td>
-              <td>{{paciente.gender}}</td>
+              <td><a class="btn btn-primary" href="{% url 'editar_usuario' paciente.id %}">Editar</a></td>
             </tr>
             {% endfor %}
           </table>
@@ -181,7 +170,9 @@
             <span class="paginationFirst"><a href="?page=1">1...</a></span>
             <a href="?page={{pacientes.previous_page_number}}"><i class="fa-solid fa-angles-left"></i></a>
             {% endif %}
+            {% if pacientes.has_next or pacientes.has_previous %}
             <span class="paginationText">Página {{pacientes.number}} de {{pacientes.paginator.num_pages}}</span>
+            {% endif %}
             {% if pacientes.has_next %}
             <a href="?page={{pacientes.next_page_number}}"><i class="fa-solid fa-angles-right"></i></a>  
             <span class="paginationLast"><a href="?page={{pacientes.paginator.num_pages}}">...{{pacientes.paginator.num_pages}}</a></span>     

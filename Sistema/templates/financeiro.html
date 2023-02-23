@@ -52,8 +52,8 @@
       </div>
       </div>
   </nav>
-    <div class="wrapper">
-      <div class="container-fluid containerReceita" >
+    <div class="wrapper row">
+      <div class="container-fluid containerReceita col-lg-6" >
         <div class="containerBotoesReceita">
           <button type="button" class="btn btn-success buttonReceita" data-bs-toggle="modal" data-bs-target="#modalReceita"><i class="fa-solid fa-plus"></i> Nova Receita</button>
           <button type="button" class="btn btn-success buttonHistoricoReceita"><i class="fa-solid fa-calendar-days"></i> Histórico das Receitas</button>
@@ -122,7 +122,7 @@
             </div>
           </div>
       </div>
-      <div class="container-fluid containerDespesa">
+      <div class="container-fluid containerDespesa col-lg-6">
         <div class="containerBotoesDespesa">
           <button type="button" class="btn btn-danger buttonDespesa" data-bs-toggle="modal" data-bs-target="#modalDespesa"><i class="fa-solid fa-minus"></i> Nova Despesa</button>
           <button type="button" class="btn btn-danger button buttonHistoricoDespesa"><i class="fa-solid fa-calendar-days"></i> Histórico das Despesas</button>
@@ -176,13 +176,13 @@
           </table>
           <div class="paginationContainer">
             {% if despesa.has_previous %}
-            <span class="paginationFirst"><a href="?page=1">1...</a></span>
-            <a href="?page={{despesa.previous_page_number}}"><i class="fa-solid fa-angles-left"></i></a>
+            <span class="paginationFirst"><a href="?pg=1">1...</a></span>
+            <a href="?pg={{despesa.previous_page_number}}"><i class="fa-solid fa-angles-left"></i></a>
             {% endif %}
             <span class="paginationText">Página {{despesa.number}} de {{despesa.paginator.num_pages}}</span>
             {% if despesa.has_next %}
-            <a href="?page={{despesa.next_page_number}}"><i class="fa-solid fa-angles-right"></i></a>  
-            <span class="paginationLast"><a href="?page={{despesa.paginator.num_pages}}">...{{despesa.paginator.num_pages}}</a></span>     
+            <a href="?pg={{despesa.next_page_number}}"><i class="fa-solid fa-angles-right"></i></a>  
+            <span class="paginationLast"><a href="?pg={{despesa.paginator.num_pages}}">...{{despesa.paginator.num_pages}}</a></span>     
             {% endif %}
           </div>
         </div>

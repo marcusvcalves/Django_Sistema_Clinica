@@ -25,15 +25,19 @@ def pacientes(request):
     p = Paginator(Paciente.objects.all(), 10)
     page = request.GET.get('page')
     pacientes = p.get_page(page)
-    return render(request, "pacientes.html", {"pacientes": pacientes})
+
+    if 'q' in request.GET:
+        q = request.GET.get('q')
+        pacientes = Paciente.objects.all().filter(name__icontains=q)
+        context = {
+            'pacientes' : pacientes
+            }
+        return render(request, "pacientes.html", context)
+    else:
+        return render(request, "pacientes.html", {"pacientes": pacientes})
 
 
 # @login_required
-
-
-    #despesa = get_object_or_404(Despesa, id=despesa_id)
-    #caixa = get_object_or_404(Caixa, id=caixa_id)
-    #return render(request, "financeiro.html", {'receita': receita}, {'despesa': despesa}, {'caixa': caixa})
 
 # @login_required
 
@@ -97,8 +101,9 @@ def financeiro(request):
     pReceita = Paginator(Receita.objects.all(),5)
     pDespesa = Paginator(Despesa.objects.all(),5)
     page = request.GET.get('page')
+    pg = request.GET.get('pg')
     receita = pReceita.get_page(page)
-    despesa = pDespesa.get_page(page)
+    despesa = pDespesa.get_page(pg)
     
     return render(request, "financeiro.html", {"receita": receita, "despesa": despesa})
 
