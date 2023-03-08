@@ -37,5 +37,13 @@ a, a:visited { text-decoration: none; }
     padding-left:30px;
     font-size: 1.1rem;
 }
+.liActive{
+    background-color: #0D6EFD;
+	color: #fff;
+}
+.paginationContainer{
+    display: flex;
+    align-self: center;
+}
 
  
