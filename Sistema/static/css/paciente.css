@@ -45,5 +45,19 @@ a, a:visited { text-decoration: none; }
     display: flex;
     align-self: center;
 }
+.buttonCadastrarCliente{
+    margin-bottom: 0.5%;
+}
+.clientesHeader{
+    display:flex;
+    flex-direction: row;
+    
+}
+.listaText{
+    margin: auto;
 
- 
+}
+.red{
+    color: #FE1F0E;
+    font-size:0.9em;
+}

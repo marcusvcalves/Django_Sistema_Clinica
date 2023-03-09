@@ -9,6 +9,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="{% static 'css/editar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,12 +17,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        *{font-family: 'Merriweather', serif;}
-        nav{background-color: black !important;}
-    </style>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbarPrincipal navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -32,7 +29,7 @@
               <a class="nav-link active" href="/">Home</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link active" href="/pacientes">Pacientes</a>
+              <a class="nav-link active" href="/pacientes">Clientes</a>
           </li>
           <li class="nav-item">
               <a class="nav-link active" href="/financeiro">Financeiro</a>
@@ -41,17 +38,11 @@
               <a class="nav-link active" href="/agenda">Agenda</a>
           </li>
           </ul>
-          <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
-          <button type="button" class="btn btn-primary">
-              <i class="fas fa-search"></i>
-          </button>
-          </form>
       </div>
       </div>
   </nav>
   <div class="editContainer">
-    <form action="." method="POST">
+    <form class="editarForm" action="." method="POST">
       {% csrf_token %}
       <div class="mb-3">
         <label for="patientName" class="form-label">Nome do Paciente:</label>
