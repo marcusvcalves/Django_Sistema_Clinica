@@ -45,62 +45,62 @@
     <form class="editarForm" action="." method="POST">
       {% csrf_token %}
       <div class="mb-3">
-        <label for="patientName" class="form-label">Nome do Cliente:</label>
+        <label for="clientName" class="form-label">Nome do Cliente:</label>
         <input
           type="text"
           value="{{cliente.name}}"
           class="form-control"
-          name="patientName"
+          name="clientName"
           aria-describedby="nome"
           required
         />
       </div>
       <div class="mb-3">
-        <label for="patientPhone" class="form-label"
+        <label for="clientPhone" class="form-label"
           >Telefone do Cliente:</label
         >
         <input
           type="tel"
           value="{{cliente.phone}}"
           class="form-control"
-          name="patientPhone"
+          name="clientPhone"
           aria-describedby="telefone"
         />
       </div>
       <div class="mb-3">
-        <label for="patientCpf" class="form-label">CPF do Cliente:</label>
+        <label for="clientCpf" class="form-label">CPF do Cliente:</label>
         <input
           type="text"
           value="{{cliente.cpf}}"
           class="form-control"
-          name="patientCpf"
+          name="clientCpf"
           aria-describedby="CPF"
         />
       </div>
       <div class="mb-3">
-        <label for="patientCep" class="form-label">CEP do Cliente:</label>
+        <label for="clientCep" class="form-label">CEP do Cliente:</label>
         <input
           type="text"
           value="{{cliente.cep}}"
           class="form-control"
-          name="patientCep"
+          name="clientCep"
           aria-describedby="CEP"
         />
       </div>
       <div class="mb-3">
-        <label for="patientAddress" class="form-label">Endereço do Cliente:</label>
+        <label for="clientAddress" class="form-label">Endereço do Cliente:</label>
         <input
           type="text"
           value="{{cliente.address}}"
           class="form-control"
-          name="patientAddress"
+          name="clientAddress"
           aria-describedby="endereço"
         />
       </div>
       <div class="mb-3">
-        <label for="patientBirth">Data de Nascimento:</label>
+        <label for="clientBirth">Data de Nascimento:</label>
         <input
-          name="patientBirth"
+          name="clientBirth"
           value="{{cliente.birthDate|date:'Y-m-d'}}"
           class="form-control"
           type="date"
@@ -111,7 +111,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="patientGender"
+          name="clientGender"
           value="M"
           id="RadioButtonMale"
           {% if cliente.gender == 'M' %}checked{% endif %}
@@ -124,7 +124,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="patientGender"
+          name="clientGender"
           value="F"
           id="RadioButtonFemale"
           {% if cliente.gender == 'F' %}checked{% endif %}
@@ -133,21 +133,19 @@
           Feminino
         </label>
       </div>
-      <input type="submit" class="btn btn-primary" value="Salvar" />
-      <input
-        type="button"
-        class="btn btn-primary"
-        onclick="window.location.href='/clientes';"
-        value="Voltar"
-      />
-      <a
-        href="{% url 'confirmar_exclusao' cliente.id %}"
-        id="delete-user-link"
-        data-user-id="{{ user.id }}"
-      >
-        <input type="button" class="btn btn-danger" value="Excluir" />
-      </a>
+      <div class="Buttons">
+        <input type="submit" class="btn btn-primary" value="Salvar" />
+        <input type="button" class="btn btn-primary" onclick="window.location.href='/clientes';" value="Voltar"/>
+        <a href="{% url 'confirmar_exclusao' cliente.id %}" id="delete-user-link" data-user-id="{{ user.id }}">
+          <input type="button" class="btn btn-danger" value="Excluir" />
+        </a>
+      </div>
     </form>
   </div>
+  <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

@@ -1,6 +1,9 @@
 *{font-family: 'Merriweather', serif;}
 
-.navbarPrincipal{background-color: black !important;}
+.navbarPrincipal{
+    background-color: black !important;
+    width:100%;
+}
 .red{
     color: #FE1F0E;
     font-size:0.9em;

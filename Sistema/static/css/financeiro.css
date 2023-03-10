@@ -10,3 +10,8 @@ a, a:visited { text-decoration: none; }
     display: flex;
     justify-content: center;
 }
+.cardContent{
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+}

@@ -16,9 +16,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/financeiro.css' %}"/>
   </head>
   <body>
-    <nav class="navbarPrincipal navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbarPrincipal navbar navbar-expand-lg navbar-dark navbarPrincipal">
       <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -41,26 +42,22 @@
       </div>
       </div>
   </nav>
-    <section id="excluirSection">
-      <h2>Gostaria de excluir este usuário?</h2>
-      <ul>
-        <li>Nome: {{cliente.name}}</li>
-        <li>Telefone: {{cliente.phone}}</li>
-        <li>CPF: {{cliente.cpf}}</li>
-        <li>CEP: {{cliente.cep}}</li>
-        <li>Endereço: {{cliente.address}}</li>
-        <li>Data de Nascimento: {{cliente.birthDate}}</li>
-        <li>Gênero: {{cliente.gender}}</li>
-      </ul>
-      <input
-        type="button"
-        class="btn btn-primary"
-        onclick="window.location.href='/clientes'"
-        value="Voltar"
-      />
-      <a href="{% url 'excluir_usuario' cliente.id %}" id="delete-user-link" data-user-id="{{ user.id }}">
-        <input type="button" class="btn btn-danger" value="Excluir" />
-      </a>
-    </section>
+  <section id="excluirSection">
+    <h2>Gostaria de excluir este usuário?</h2>
+    <ul>
+      <li>Valor: {{despesa.value}}</li>
+      <li>Profissional: {{despesa.professional}}</li>
+      <li>Descrição: {{despesa.desc}}</li>
+    </ul>
+    <input type="button" class="btn btn-primary" onclick="window.location.href='/financeiro?pg=1'" value="Voltar"/>
+    <a href="{% url 'excluir_despesa' despesa.id %}" id="delete-user-link" data-user-id="{{ despesa.id }}">
+      <input type="button" class="btn btn-danger" value="Excluir" />
+    </a>
+  </section>
+  <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
   </body>
-</html>
+  </html>

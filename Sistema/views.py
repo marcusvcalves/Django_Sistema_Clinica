@@ -44,18 +44,18 @@ def clientes(request):
 
 def cadastrar_usuario(request):
     if request.method == 'POST':
-        if request.POST.get('patientName'):
+        if request.POST.get('clientName'):
             cliente = Cliente()
-            cliente.name = request.POST.get('patientName')
-            cliente.phone = request.POST.get('patientPhone')
-            cliente.cpf = request.POST.get('patientCpf')
-            cliente.cep = request.POST.get('patientCep')
-            cliente.address = request.POST.get('patientAddress')
-            if (request.POST.get('patientBirth') == ""):
+            cliente.name = request.POST.get('clientName')
+            cliente.phone = request.POST.get('clientPhone')
+            cliente.cpf = request.POST.get('clientCpf')
+            cliente.cep = request.POST.get('clientCep')
+            cliente.address = request.POST.get('clientAddress')
+            if (request.POST.get('clientBirth') == ""):
                 cliente.birthDate = None
             else:
-                cliente.birthDate = request.POST.get('patientBirth')
-            cliente.gender = request.POST.get('patientGender')
+                cliente.birthDate = request.POST.get('clientBirth')
+            cliente.gender = request.POST.get('clientGender')
             cliente.save()
 
             return HttpResponseRedirect('/clientes')
@@ -69,20 +69,20 @@ def cadastrar_usuario(request):
 def editar_usuario(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
     if request.method == 'POST':
-        if request.POST.get('patientName'):
-            cliente.name = request.POST.get('patientName')
-            cliente.phone = request.POST.get('patientPhone')
-            cliente.cpf = request.POST.get('patientCpf')
-            cliente.cep = request.POST.get('patientCep')
-            cliente.address = request.POST.get('patientAddress')
-            if (request.POST.get('patientBirth') == ""):
+        if request.POST.get('clientName'):
+            cliente.name = request.POST.get('clientName')
+            cliente.phone = request.POST.get('clientPhone')
+            cliente.cpf = request.POST.get('clientCpf')
+            cliente.cep = request.POST.get('clientCep')
+            cliente.address = request.POST.get('clientAddress')
+            if (request.POST.get('clientBirth') == ""):
                 cliente.birthDate = None
             else:
-                cliente.birthDate = request.POST.get('patientBirth')
-            cliente.gender = request.POST.get('patientGender')
+                cliente.birthDate = request.POST.get('clientBirth')
+            cliente.gender = request.POST.get('clientGender')
             cliente.save()
             return HttpResponseRedirect('/clientes')
-    return render(request, "editar.html", {'cliente': cliente})
+    return render(request, "editar_cliente.html", {'cliente': cliente})
 
 
 def excluir_usuario(request, cliente_id):
@@ -93,21 +93,23 @@ def excluir_usuario(request, cliente_id):
 
 def confirmar_exclusao(request, cliente_id):
     cliente = get_object_or_404(Cliente, id=cliente_id)
-    return render(request, "confirmar.html", {'cliente': cliente})
+    return render(request, "confirmar_exclusao_cliente.html", {'cliente': cliente})
 
 
 
 def financeiro(request):
     pReceita = Paginator(Receita.objects.get_queryset().order_by('id'),10)
-    pDespesa = Paginator(Despesa.objects.get_queryset().order_by('id'),5)
+    pDespesa = Paginator(Despesa.objects.get_queryset().order_by('id'),10)
     page = request.GET.get('page')
     pg = request.GET.get('pg')
     receita = pReceita.get_page(page)
     despesa = pDespesa.get_page(pg)
+    tab_shown = "receita" if page else "despesa" if pg else "receita"
 
     return render(request, "financeiro.html", {
         "receita": receita,
         "despesa": despesa,
+        "tab_shown": tab_shown,
         })
 
 
@@ -129,10 +131,52 @@ def cadastrar_transacao(request):
             despesa.desc = request.POST.get('descricaoDespesa')
             despesa.save()
             
-            return HttpResponseRedirect('/financeiro')
+            return HttpResponseRedirect('/financeiro?pg=1')
         else:
             return HttpResponseRedirect('/financeiro')
 
 
+def editar_receita(request, receita_id):
+    receita = Receita.objects.get(id=receita_id)
+    if request.method == 'POST':
+        if request.POST.get('valorReceita'):
+            receita.value = request.POST.get('valorReceita')
+            receita.professional = request.POST.get('profissionalReceita')
+            receita.desc = request.POST.get('descricaoReceita')
+            receita.pago = request.POST.get('pagoReceita')
+            receita.save()
 
+            return HttpResponseRedirect('/financeiro')
+    return render(request, "editar_receita.html", {'receita': receita})
+
+def confirmar_exclusao_receita(request, receita_id):
+    receita = get_object_or_404(Receita, id=receita_id)
+    return render(request, "confirmar_exclusao_receita.html", {'receita': receita})
+
+def excluir_receita(request, receita_id):
+    receita = Receita.objects.filter(id=receita_id)
+    receita.delete()
+    return HttpResponseRedirect('/financeiro')
+
+
+def editar_despesa(request, despesa_id):
+    despesa = Despesa.objects.get(id=despesa_id)
+    if request.method == 'POST':
+        if request.POST.get('valorDespesa'):
+            despesa.value = request.POST.get('valorDespesa')
+            despesa.desc = request.POST.get('descricaoDespesa')
+            despesa.save()
+
+            return HttpResponseRedirect('/financeiro?pg=1')
+    return render(request, "editar_despesa.html", {'despesa': despesa})
+
+
+def confirmar_exclusao_despesa(request, despesa_id):
+    despesa = get_object_or_404(Despesa, id=despesa_id)
+    return render(request, "confirmar_exclusao_despesa.html", {'despesa': despesa})
+
+def excluir_despesa(request, despesa_id):
+    despesa = Despesa.objects.filter(id=despesa_id)
+    despesa.delete()
+    return HttpResponseRedirect('/financeiro?pg=1')
 
