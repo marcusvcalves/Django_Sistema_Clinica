@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/paciente.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/clientes.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
   </head>
   <body>
@@ -30,7 +30,7 @@
               <a class="nav-link active" href="/">Home</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link active" href="/pacientes">Clientes</a>
+              <a class="nav-link active" href="/clientes">Clientes</a>
           </li>
           <li class="nav-item">
               <a class="nav-link active" href="/financeiro">Financeiro</a>
@@ -52,7 +52,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cadastrar novo cliente</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Cadastrar novo Cliente</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body row">
@@ -60,7 +60,7 @@
             {% csrf_token %}
             <div class="mb-3">
               <label for="patientName" class="form-label"
-                >Nome do Cliente<span class="red">*</span></label
+                >Nome<span class="red">*</span></label
               >
               <input
                 type="text"
@@ -72,7 +72,7 @@
             </div>
             <div class="mb-3">
               <label for="patientPhone" class="form-label"
-                >Telefone do Cliente</label
+                >Telefone</label
               >
               <input
                 type="tel"
@@ -83,7 +83,7 @@
             </div>
             <div class="mb-3">
               <label for="patientCpf" class="form-label"
-                >CPF do Cliente</label
+                >CPF</label
               >
               <input
                 type="text"
@@ -94,7 +94,7 @@
             </div>
             <div class="mb-3">
               <label for="patientCep" class="form-label"
-                >CEP do Cliente</label
+                >CEP</label
               >
               <input
                 type="text"
@@ -105,7 +105,7 @@
             </div>
             <div class="mb-3">
               <label for="patientAddress" class="form-label"
-                >Endereço do Cliente</label
+                >Endereço</label
               >
               <input
                 type="text"
@@ -153,7 +153,7 @@
     </div>
   </div>
     <div class="container-fluid divContent">
-        <div class="col-lg-12 listaPacientes">
+        <div class="col-lg-12 listaClientes">
           <div class="clientesHeader">
             <button type="button" class="btn btn-success buttonCadastrarCliente col-lg-2 col-4 " data-bs-toggle="modal" data-bs-target="#modalAdicionarCliente"><i class="fa-solid fa-plus"></i> Cadastrar Cliente</button>
             <h2 class="listaText">Lista de Clientes</h2>
@@ -168,21 +168,21 @@
               <th>Gênero</th>
               <th></th>
             </tr>
-            {% for paciente in pacientes %}
+            {% for cliente in clientes %}
             <tr>
-              <td>{{paciente.name}}</td>
-              <td>{{paciente.phone}}</td>
-              <td>{{paciente.cpf}}</td>
-              <td>{{paciente.cep}}</td>
-              <td>{{paciente.birthDate|date:"d/m/Y"}}</td>
-              <td>{{paciente.gender}}</td>
-              <td><a class="btn btn-primary" href="{% url 'editar_usuario' paciente.id %}">Editar</a></td>
+              <td>{{cliente.name}}</td>
+              <td>{{cliente.phone}}</td>
+              <td>{{cliente.cpf}}</td>
+              <td>{{cliente.cep}}</td>
+              <td>{{cliente.birthDate|date:"d/m/Y"}}</td>
+              <td>{{cliente.gender}}</td>
+              <td><a class="btn btn-primary" href="{% url 'editar_usuario' cliente.id %}">Editar</a></td>
             </tr>
             {% endfor %}
           </table>
           <div class="paginationContainer">
             <ul class="pagination">
-                    {% if pacientes.has_previous %}
+                    {% if clientes.has_previous %}
                     <li class="page-item">
                       <a class="page-link" href="?page=1" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
@@ -195,22 +195,22 @@
                       </a>
                     </li>
                     {% endif %}
-                    {% for i in pacientes.paginator.page_range %}
-                        {% if pacientes.number == i %}
+                    {% for i in clientes.paginator.page_range %}
+                        {% if clientes.number == i %}
                             <li class="page-link liActive"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                        {% elif i > pacientes.number|add:'-5' and i < pacientes.number|add:'5' %}
+                        {% elif i > clientes.number|add:'-5' and i < clientes.number|add:'5' %}
                             <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
                         {% endif %}
                     {% endfor %}
-                    {% if pacientes.has_next %}
+                    {% if clientes.has_next %}
                     <li class="page-item">
-                      <a class="page-link" href="?page={{pacientes.paginator.num_pages}}" aria-label="Next">
+                      <a class="page-link" href="?page={{clientes.paginator.num_pages}}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                       </a>
                     </li>
                     {% else %}
                     <li class="page-item disabled">
-                      <a class="page-link" href="?page={{pacientes.paginator.num_pages}}" aria-label="Next">
+                      <a class="page-link" href="?page={{clientes.paginator.num_pages}}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                       </a>
                     </li>

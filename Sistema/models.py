@@ -2,7 +2,7 @@ from django.db import models
 from cpf_field.models import CPFField
 
 
-class Paciente(models.Model):
+class Cliente(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=100, blank=True)
     cpf = CPFField('cpf')

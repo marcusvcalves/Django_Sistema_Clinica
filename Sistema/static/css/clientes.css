@@ -1,7 +1,7 @@
 .divContent{
     padding-top:2%;
 }
-.listaPacientes{
+.listaClientes{
     display:flex;
     flex-direction: column;
     text-align: center;

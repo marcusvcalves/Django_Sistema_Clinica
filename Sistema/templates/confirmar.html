@@ -29,7 +29,7 @@
               <a class="nav-link active" href="/">Home</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link active" href="/pacientes">Clientes</a>
+              <a class="nav-link active" href="/clientes">Clientes</a>
           </li>
           <li class="nav-item">
               <a class="nav-link active" href="/financeiro">Financeiro</a>
@@ -44,21 +44,21 @@
     <section id="excluirSection">
       <h2>Gostaria de excluir este usuário?</h2>
       <ul>
-        <li>Nome: {{paciente.name}}</li>
-        <li>Telefone: {{paciente.phone}}</li>
-        <li>CPF: {{paciente.cpf}}</li>
-        <li>CEP: {{paciente.cep}}</li>
-        <li>Endereço: {{paciente.address}}</li>
-        <li>Data de Nascimento: {{paciente.birthDate}}</li>
-        <li>Gênero: {{paciente.gender}}</li>
+        <li>Nome: {{cliente.name}}</li>
+        <li>Telefone: {{cliente.phone}}</li>
+        <li>CPF: {{cliente.cpf}}</li>
+        <li>CEP: {{cliente.cep}}</li>
+        <li>Endereço: {{cliente.address}}</li>
+        <li>Data de Nascimento: {{cliente.birthDate}}</li>
+        <li>Gênero: {{cliente.gender}}</li>
       </ul>
       <input
         type="button"
         class="btn btn-primary"
-        onclick="window.location.href='/pacientes'"
+        onclick="window.location.href='/clientes'"
         value="Voltar"
       />
-      <a href="{% url 'excluir_usuario' paciente.id %}" id="delete-user-link" data-user-id="{{ user.id }}">
+      <a href="{% url 'excluir_usuario' cliente.id %}" id="delete-user-link" data-user-id="{{ user.id }}">
         <input type="button" class="btn btn-danger" value="Excluir" />
       </a>
     </section>
