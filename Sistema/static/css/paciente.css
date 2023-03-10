@@ -13,30 +13,12 @@ th{
     color: white;
 }
 
-.adicionarPacientes h2{
-    text-align: center;
-}
-
 a, a:visited { text-decoration: none; }
 
-.paginationText{
-    color:#1A5EB7;
-    font-size: 1.1rem;
-}
 .fa-angles-left, .fa-angles-right, .listaText, a{
     color:#1A5EB7;
 }
-.adicionarText{
-    color:#9F0000;
-}
-.paginationFirst{
-    padding-right:30px;
-    font-size: 1.1rem;
-}
-.paginationLast{
-    padding-left:30px;
-    font-size: 1.1rem;
-}
+
 .liActive{
     background-color: #0D6EFD;
 	color: #fff;
@@ -51,13 +33,8 @@ a, a:visited { text-decoration: none; }
 .clientesHeader{
     display:flex;
     flex-direction: row;
-    
 }
 .listaText{
     margin: auto;
 
-}
-.red{
-    color: #FE1F0E;
-    font-size:0.9em;
 }

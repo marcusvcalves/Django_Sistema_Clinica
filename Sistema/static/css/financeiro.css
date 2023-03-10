@@ -8,5 +8,5 @@ a, a:visited { text-decoration: none; }
 }
 .paginationContainer{
     display: flex;
-    align-self: center;
+    justify-content: center;
 }

@@ -1,3 +1,7 @@
 *{font-family: 'Merriweather', serif;}
 
 .navbarPrincipal{background-color: black !important;}
+.red{
+    color: #FE1F0E;
+    font-size:0.9em;
+}
