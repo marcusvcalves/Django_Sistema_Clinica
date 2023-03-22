@@ -48,7 +48,7 @@
             {% csrf_token %} 
             <div class="mb-3">
               <label for="valorReceita" class="form-label">Valor</label>
-              <input type="number" value="{{receita.value}}" step="0.01" class="form-control" id="valorReceita" name="valorReceita" aria-describedby="valorReceita">
+              <input type="number" value="{{receita.value|stringformat:'.2f'}}" step="0.01" class="form-control" id="valorReceita" name="valorReceita" aria-describedby="valorReceita">
             </div>
             <div class="mb-3">
               <label for="profissionalReceita" class="form-label">Profissional</label>
@@ -59,8 +59,13 @@
               <input type="text" value="{{receita.desc}}" class="form-control" id="descricaoReceita" name="descricaoReceita" aria-describedby="descricaoReceita">
             </div>
             <div>
-              <input type="checkbox" value="{{receita.pago}}" id="pagoReceita" name="pagoReceita">
+              {% if receita.pago == True %}
+              <input type="checkbox" id="pagoReceita" name="pagoReceita" checked>
               <label for="pagoReceita">Pago</label>
+              {% elif receita.pago == False %}
+              <input type="checkbox" id="pagoReceita" name="pagoReceita">
+              <label for="pagoReceita">Pago</label>
+              {% endif %}
             </div>
             <div class="Buttons">
               <input type="submit" class="btn btn-primary" value="Salvar" />

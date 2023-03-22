@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import home, clientes, agenda, financeiro, cadastrar_usuario, editar_usuario, excluir_usuario, confirmar_exclusao, cadastrar_transacao
-from .views import editar_receita, excluir_receita, confirmar_exclusao_receita, editar_despesa, excluir_despesa, confirmar_exclusao_despesa
+from .views import editar_receita, excluir_receita, confirmar_exclusao_receita, editar_despesa, excluir_despesa, confirmar_exclusao_despesa, all_events
 
 urlpatterns = [
     path('', home),
     path('clientes', clientes),
     path('agenda', agenda),
+    path('all_events', all_events, name="all_events"),
     path('financeiro', financeiro),
     path('clientes/', cadastrar_usuario, name="cadastrar_usuario"),
     path('editar/<int:cliente_id>/', editar_usuario, name="editar_usuario"),

@@ -1,8 +1,8 @@
-from .models import Cliente, Receita, Despesa, Caixa
-from django.http import HttpResponseRedirect
+from .models import Cliente, Receita, Despesa, Events
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator
-
+from django.utils import timezone
 
 # Create your views here.
 
@@ -16,7 +16,26 @@ def home(request):
 
 
 def agenda(request):
-    return render(request, "agenda.html")
+    all_events = Events.objects.all()
+    context = {
+        "events": all_events,
+    }
+    return render(request, "agenda.html", context)
+
+def all_events(request):
+    all_events = Events.objects.all()
+    out = []
+    for event in all_events:
+        start = timezone.localtime(event.start)
+        end = timezone.localtime(event.end)
+        
+        out.append({
+            'title': event.name,
+            'id': event.id,
+            'start': start.strftime('%Y-%m-%d %H:%M:00'),
+            'end': end.strftime('%Y-%m-%d %H:%M:00'),
+        })
+    return JsonResponse(out, safe=False)
 
 # @login_required
 
@@ -48,6 +67,7 @@ def cadastrar_usuario(request):
             cliente = Cliente()
             cliente.name = request.POST.get('clientName')
             cliente.phone = request.POST.get('clientPhone')
+            cliente.email = request.POST.get('clientEmail')
             cliente.cpf = request.POST.get('clientCpf')
             cliente.cep = request.POST.get('clientCep')
             cliente.address = request.POST.get('clientAddress')
@@ -72,6 +92,7 @@ def editar_usuario(request, cliente_id):
         if request.POST.get('clientName'):
             cliente.name = request.POST.get('clientName')
             cliente.phone = request.POST.get('clientPhone')
+            cliente.email = request.POST.get('clientEmail')
             cliente.cpf = request.POST.get('clientCpf')
             cliente.cep = request.POST.get('clientCep')
             cliente.address = request.POST.get('clientAddress')
@@ -120,7 +141,11 @@ def cadastrar_transacao(request):
             receita.value = request.POST.get('valorReceita')
             receita.professional = request.POST.get('profissionalReceita')
             receita.desc = request.POST.get('descricaoReceita')
-            receita.pago = request.POST.get('pagoReceita')
+            pago = request.POST.get('pagoReceita')
+            if(pago == "on"):
+                receita.pago = True
+            else:
+                receita.pago = False
             receita.save()
             
             return HttpResponseRedirect('/financeiro')
@@ -143,11 +168,16 @@ def editar_receita(request, receita_id):
             receita.value = request.POST.get('valorReceita')
             receita.professional = request.POST.get('profissionalReceita')
             receita.desc = request.POST.get('descricaoReceita')
-            receita.pago = request.POST.get('pagoReceita')
+            pago = request.POST.get('pagoReceita')
+            if(pago == "on"):
+                receita.pago = True
+            else:
+                receita.pago = False
             receita.save()
 
             return HttpResponseRedirect('/financeiro')
     return render(request, "editar_receita.html", {'receita': receita})
+
 
 def confirmar_exclusao_receita(request, receita_id):
     receita = get_object_or_404(Receita, id=receita_id)

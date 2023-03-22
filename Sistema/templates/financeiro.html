@@ -142,6 +142,8 @@
                     <tr class="trHeader">
                       <th>Data</th>
                       <th>Valor</th>
+                      <th>Profissional</th>
+                      <th>Descrição</th>
                       <th>Pago</th>
                       <th></th>
                     </tr>
@@ -149,7 +151,15 @@
                     <tr>
                       <td>{{r.date|date:"d/m/Y, G:i:s"}}</td>
                       <td>{{r.value}}</td>
-                      <td>{{r.pago}}</td>
+                      <td>{{r.professional}}</td>
+                      <td>{{r.desc}}</td>
+                      {% if r.pago == True %}
+                      <td>Sim</td>
+                      {% elif r.pago == False %}
+                      <td>Não</td>
+                      {% else %}
+                      <td></td>
+                      {% endif %}
                       <td><a class="btn btn-primary" href="{% url 'editar_receita' r.id %}">Editar</a></td>
                     </tr>
                     {% endfor %}
@@ -203,12 +213,14 @@
                     <tr class="trHeader">
                       <th>Data</th>
                       <th>Valor</th>
+                      <th>Descrição</th>
                       <th></th>
                     </tr>
                     {% for d in despesa %}
                     <tr>
                       <td>{{d.date|date:"d/m/Y, G:i:s"}}</td>
                       <td>{{d.value}}</td>
+                      <td>{{d.desc}}</td>
                       <td><a class="btn btn-primary" href="{% url 'editar_despesa' d.id %}">Editar</a></td>
                     </tr>
                     {% endfor %}

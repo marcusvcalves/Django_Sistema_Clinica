@@ -1,11 +1,11 @@
 from django.db import models
-from cpf_field.models import CPFField
 
 
 class Cliente(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=100, blank=True)
-    cpf = CPFField('cpf')
+    email = models.EmailField(max_length = 254, blank=True, null=True, default=None)
+    cpf = models.CharField(max_length=100, blank=True, null=True, default=None)
     cep = models.CharField(max_length=100, blank=True)
     address = models.CharField(max_length=100, blank=True)
     birthDate = models.DateField(blank=True, null=True)
@@ -47,4 +47,15 @@ class Caixa(models.Model):
 
     def __str__(self):
         template = '{0.date}, {0.value}, {0.professional}, {0.desc}'
+        return template.format(self)
+    
+
+class Events(models.Model):
+    id= models.AutoField(primary_key=True)
+    name= models.CharField(max_length=255,null=True,blank=True)
+    start= models.DateTimeField(null=True,blank=True)
+    end= models.DateTimeField(null=True,blank=True)
+
+    def __str__(self):
+        template = '{0.id}, {0.name}, {0.start}, {0.end}'
         return template.format(self)

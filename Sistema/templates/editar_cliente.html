@@ -48,6 +48,7 @@
         <label for="clientName" class="form-label">Nome do Cliente:</label>
         <input
           type="text"
+          pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"
           value="{{cliente.name}}"
           class="form-control"
           name="clientName"
@@ -61,6 +62,7 @@
         >
         <input
           type="tel"
+          onkeyup="handlePhone(event)"
           value="{{cliente.phone}}"
           class="form-control"
           name="clientPhone"
@@ -68,9 +70,24 @@
         />
       </div>
       <div class="mb-3">
+        <label for="clientEmail" class="form-label"
+          >Email</label
+        >
+        <input
+          type="email"
+          value="{{cliente.email}}"
+          class="form-control"
+          name="clientEmail"
+          aria-describedby="email"
+        />
+      </div>
+      <div class="mb-3">
         <label for="clientCpf" class="form-label">CPF do Cliente:</label>
         <input
           type="text"
+          id="clienteCpf"
+          minlength="14"
+          maxlength="14"
           value="{{cliente.cpf}}"
           class="form-control"
           name="clientCpf"
@@ -81,6 +98,9 @@
         <label for="clientCep" class="form-label">CEP do Cliente:</label>
         <input
           type="text"
+          minlength="9"
+          minlength="9"
+          onkeypress="cepMascara(this)"
           value="{{cliente.cep}}"
           class="form-control"
           name="clientCep"
@@ -147,5 +167,6 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <script src="{% static 'js/clientes.js' %}"></script>
   </body>
 </html>

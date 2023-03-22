@@ -64,6 +64,7 @@
               >
               <input
                 type="text"
+                pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"
                 class="form-control"
                 name="clientName"
                 aria-describedby="nome"
@@ -76,9 +77,21 @@
               >
               <input
                 type="tel"
+                onkeyup="handlePhone(event)"
                 class="form-control"
                 name="clientPhone"
                 aria-describedby="telefone"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="clientEmail" class="form-label"
+                >Email</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                name="clientEmail"
+                aria-describedby="email"
               />
             </div>
             <div class="mb-3">
@@ -87,6 +100,9 @@
               >
               <input
                 type="text"
+                id="clienteCpf"
+                minlength="14"
+                maxlength="14"
                 class="form-control"
                 name="clientCpf"
                 aria-describedby="CPF"
@@ -98,6 +114,9 @@
               >
               <input
                 type="text"
+                minlength="9"
+                minlength="9"
+                onkeypress="cepMascara(this)"
                 class="form-control"
                 name="clientCep"
                 aria-describedby="CEP"
@@ -162,6 +181,7 @@
             <tr class="trHeader">
               <th>Nome</th>
               <th>Telefone</th>
+              <th>Email</th>
               <th>CPF</th>
               <th>CEP</th>
               <th>Data de Nascimento</th>
@@ -172,6 +192,7 @@
             <tr>
               <td>{{cliente.name}}</td>
               <td>{{cliente.phone}}</td>
+              <td>{{cliente.email}}</td>
               <td>{{cliente.cpf}}</td>
               <td>{{cliente.cep}}</td>
               <td>{{cliente.birthDate|date:"d/m/Y"}}</td>
@@ -224,5 +245,6 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"
   ></script>
+  <script src="{% static 'js/clientes.js' %}"></script>
   </body>
 </html>
