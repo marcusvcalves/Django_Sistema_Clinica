@@ -8,6 +8,7 @@
 }
 .trHeader{
     background-color: black;
+
 }
 th{
     color: white;
@@ -16,7 +17,8 @@ th{
 a, a:visited { text-decoration: none; }
 
 .fa-angles-left, .fa-angles-right, .listaText, a{
-    color:#1A5EB7;
+    color:#0B5ED7;
+    
 }
 
 .liActive{
@@ -38,3 +40,4 @@ a, a:visited { text-decoration: none; }
     margin: auto;
 
 }
+ 

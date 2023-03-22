@@ -15,3 +15,11 @@ a, a:visited { text-decoration: none; }
     flex-direction: column;
     text-align: center;
 }
+
+.trHeader{
+    background-color: black;
+
+}
+th{
+    color: white;
+}

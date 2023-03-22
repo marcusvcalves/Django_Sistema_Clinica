@@ -1,10 +1,17 @@
 *{font-family: 'Merriweather', serif;}
 
 .navbarPrincipal{
-    background-color: black !important;
+    background-color: #0B5ED7 !important;
     width:100%;
+}
+.nav-item:hover{
+    background-color: #236ad4;
+    border-radius: 3px;
 }
 .red{
     color: #FE1F0E;
     font-size:0.9em;
+}
+.nav-item{
+    margin-left:1vw;
 }
