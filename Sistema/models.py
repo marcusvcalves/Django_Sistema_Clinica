@@ -20,6 +20,25 @@ class Cliente(models.Model):
         template = '{0.name}, {0.phone}, {0.cpf}, {0.cep},  {0.address}, {0.birthDate}, {0.gender}'
         return template.format(self)
 
+class Dentista(models.Model):
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(max_length = 254, blank=True, null=True, default=None)
+    cpf = models.CharField(max_length=100, blank=True, null=True, default=None)
+    cep = models.CharField(max_length=100, blank=True)
+    address = models.CharField(max_length=100, blank=True)
+    birthDate = models.DateField(blank=True, null=True)
+    GENDER = (
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+    )
+    gender = models.CharField(
+        max_length=1, choices=GENDER, blank=True, null=True)
+
+    def __str__(self):
+        template = '{0.name}, {0.phone}, {0.cpf}, {0.cep},  {0.address}, {0.birthDate}, {0.gender}'
+        return template.format(self)
+
 
 class Receita(models.Model):
     date = models.DateTimeField(auto_now_add=True)
@@ -59,3 +78,4 @@ class Events(models.Model):
     def __str__(self):
         template = '{0.id}, {0.name}, {0.start}, {0.end}'
         return template.format(self)
+    

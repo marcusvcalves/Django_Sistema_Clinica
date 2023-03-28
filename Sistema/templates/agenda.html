@@ -20,30 +20,42 @@
     <title>Document</title>
   </head>
   <body>
-    <nav class="navbarPrincipal navbar navbar-expand-lg navbar-dark ">
-      <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarScroll">
-          <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-          <li class="nav-item">
-              <a class="nav-link active" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link active" href="/clientes">Clientes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link active" href="/financeiro">Financeiro</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link active" href="/agenda">Agenda</a>
-          </li>
-          </ul>
+    {% include 'navbar.html' %} 
+    <div class="modal fade" id="modalAdicionarEvento" tabindex="-1" aria-labelledby="modalAdicionarEvento" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Adicionar novo evento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body row">
+            <form action="{% url 'cadastrar_usuario' %}" method="POST">
+            {% csrf_token %}
+              <div class="mb-3">
+                <label for="name" class="form-label">Paciente</label>
+                <input type="text" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="date" class="form-label">Data</label>
+                <input type="date" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="time" class="form-label">Horário</label>
+                <input type="time" class="form-control">
+              </div>
+                
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-primary" value="Enviar">
+            <input type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="Fechar">
+          </div>
+        </form>
+        </div>
       </div>
-      </div>
-  </nav>
+    </div>
+    </div>
+    <button type="button" class="btn btn-success col-lg-2 col-4 " data-bs-toggle="modal" data-bs-target="#modalAdicionarEvento">Adicionar Evento</button>
   <div id='calendar'>
+
 
   </div>
 

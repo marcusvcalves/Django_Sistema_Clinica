@@ -16,9 +16,9 @@ def home(request):
 
 
 def agenda(request):
-    all_events = Events.objects.all()
+    events = Events.objects.all()
     context = {
-        "events": all_events,
+        "events": events,
     }
     return render(request, "agenda.html", context)
 

@@ -1,11 +1,12 @@
 *{font-family: 'Merriweather', serif;}
 
 .navbarPrincipal{
-    background-color: #0B5ED7 !important;
+    background-color: #202A37 !important;
     width:100%;
 }
-.nav-item:hover{
-    background-color: #236ad4;
+
+.nav-link:hover{
+    background-color: #ffffff26;
     border-radius: 3px;
 }
 .red{
@@ -13,5 +14,13 @@
     font-size:0.9em;
 }
 .nav-item{
-    margin-left:1vw;
+    margin-left:1.5vw;
+}
+
+#excluirSection{
+    margin-left: 1.5%;
+    margin-top: 1.5%;
+}
+.trHeader{
+    background-color: #202A37 !important;
 }
