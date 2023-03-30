@@ -43,12 +43,22 @@
                   <a class="nav-link active" href="/agenda"><i class="bx bx-calendar"></i> Agenda</a>
               </li>
             </ul>
-            <form class="d-flex" method="get">
-            <input name = "q" class="form-control me-2" type="search" placeholder="Pesquisar cliente" aria-label="Pesquisar">
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-search"></i>
-            </button>
-            </form>
+            <ul class="navbar-nav mx-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <form class="d-flex" method="get">
+              <input name = "q" class="form-control me-2" type="search" placeholder="Pesquisar cliente" aria-label="Pesquisar">
+              <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-search"></i>
+              </button>
+              </form>
+            </ul>
+            <ul class="navbar-nav ml-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              {% if user.is_authenticated %}
+              <li class="nav-item me-2">
+                <a class="nav-link active" href="logout">Logout</a>
+              </li>
+              {% endif %}
+            </ul>
+
         </div>
         </div>
     </nav>

@@ -1,20 +1,39 @@
 from .models import Cliente, Receita, Despesa, Events
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
 from django.utils import timezone
-
-# Create your views here.
-
-# @login_required
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+        if user is None:
+            context = {"error": "Usuário ou senha inválidos."}
+            return render(request, "login.html", context)
+    if request.user.is_authenticated:
+        return redirect(home)
+    else:
+        return render(request, "login.html")
+
+
+@login_required(login_url='/login')
+def logout_view(request):
+    logout(request)
+    return redirect(login_view)
+
+@login_required(login_url='/login')
 def home(request):
     return render(request, "index.html")
 
-# @login_required
-
-
+@login_required(login_url='/login')
 def agenda(request):
     events = Events.objects.all()
     context = {
@@ -22,6 +41,7 @@ def agenda(request):
     }
     return render(request, "agenda.html", context)
 
+@login_required(login_url='/login')
 def all_events(request):
     all_events = Events.objects.all()
     out = []
@@ -37,9 +57,8 @@ def all_events(request):
         })
     return JsonResponse(out, safe=False)
 
-# @login_required
 
-
+@login_required(login_url='/login')
 def clientes(request):
     p = Paginator(Cliente.objects.get_queryset().order_by('id'), 10)
     page = request.GET.get('page')
@@ -56,11 +75,8 @@ def clientes(request):
         return render(request, "clientes.html", {"clientes": clientes})
 
 
-# @login_required
 
-# @login_required
-
-
+@login_required(login_url='/login')
 def cadastrar_usuario(request):
     if request.method == 'POST':
         if request.POST.get('clientName'):
@@ -83,9 +99,9 @@ def cadastrar_usuario(request):
     else:
         return HttpResponseRedirect('/clientes')
 
-# @login_required
+# @login_required(login_url='/login')
 
-
+@login_required(login_url='/login')
 def editar_usuario(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
     if request.method == 'POST':
@@ -105,19 +121,19 @@ def editar_usuario(request, cliente_id):
             return HttpResponseRedirect('/clientes')
     return render(request, "editar_cliente.html", {'cliente': cliente})
 
-
+@login_required(login_url='/login')
 def excluir_usuario(request, cliente_id):
     cliente = Cliente.objects.filter(id=cliente_id)
     cliente.delete()
     return HttpResponseRedirect('/clientes')
 
-
+@login_required(login_url='/login')
 def confirmar_exclusao(request, cliente_id):
     cliente = get_object_or_404(Cliente, id=cliente_id)
     return render(request, "confirmar_exclusao_cliente.html", {'cliente': cliente})
 
 
-
+@login_required(login_url='/login')
 def financeiro(request):
     pReceita = Paginator(Receita.objects.get_queryset().order_by('id'),10)
     pDespesa = Paginator(Despesa.objects.get_queryset().order_by('id'),10)
@@ -133,7 +149,7 @@ def financeiro(request):
         "tab_shown": tab_shown,
         })
 
-
+@login_required(login_url='/login')
 def cadastrar_transacao(request):
     if request.method == 'POST':
         if request.POST.get('valorReceita'):
@@ -160,7 +176,7 @@ def cadastrar_transacao(request):
         else:
             return HttpResponseRedirect('/financeiro')
 
-
+@login_required(login_url='/login')
 def editar_receita(request, receita_id):
     receita = Receita.objects.get(id=receita_id)
     if request.method == 'POST':
@@ -178,17 +194,18 @@ def editar_receita(request, receita_id):
             return HttpResponseRedirect('/financeiro')
     return render(request, "editar_receita.html", {'receita': receita})
 
-
+@login_required(login_url='/login')
 def confirmar_exclusao_receita(request, receita_id):
     receita = get_object_or_404(Receita, id=receita_id)
     return render(request, "confirmar_exclusao_receita.html", {'receita': receita})
 
+@login_required(login_url='/login')
 def excluir_receita(request, receita_id):
     receita = Receita.objects.filter(id=receita_id)
     receita.delete()
     return HttpResponseRedirect('/financeiro')
 
-
+@login_required(login_url='/login')
 def editar_despesa(request, despesa_id):
     despesa = Despesa.objects.get(id=despesa_id)
     if request.method == 'POST':
@@ -200,11 +217,12 @@ def editar_despesa(request, despesa_id):
             return HttpResponseRedirect('/financeiro?pg=1')
     return render(request, "editar_despesa.html", {'despesa': despesa})
 
-
+@login_required(login_url='/login')
 def confirmar_exclusao_despesa(request, despesa_id):
     despesa = get_object_or_404(Despesa, id=despesa_id)
     return render(request, "confirmar_exclusao_despesa.html", {'despesa': despesa})
 
+@login_required(login_url='/login')
 def excluir_despesa(request, despesa_id):
     despesa = Despesa.objects.filter(id=despesa_id)
     despesa.delete()

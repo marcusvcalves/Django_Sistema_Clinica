@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import home, clientes, agenda, financeiro, cadastrar_usuario, editar_usuario, excluir_usuario, confirmar_exclusao, cadastrar_transacao
-from .views import editar_receita, excluir_receita, confirmar_exclusao_receita, editar_despesa, excluir_despesa, confirmar_exclusao_despesa, all_events
+from .views import editar_receita, excluir_receita, confirmar_exclusao_receita, editar_despesa, excluir_despesa, confirmar_exclusao_despesa, all_events, login_view, logout_view
 
 urlpatterns = [
+    path('login', login_view),
+    path('logout', logout_view),
     path('', home),
     path('clientes', clientes),
     path('agenda', agenda),

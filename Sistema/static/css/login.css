@@ -1,0 +1,40 @@
+html,body{
+    height: 100%;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(32,42,55,1) 43%, rgba(0,0,0,1) 100%);
+    
+
+}
+
+.loginContainer{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+
+}
+.loginHeader{
+    margin: 0px 0 10% 0;
+}
+.loginForm{
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    padding: 5%;
+    background-color: white;
+    border-radius: 10px;
+}
+.mostrarSenha{
+    display: flex;
+    align-items: flex-start;
+}
+.form-label{
+    font-size: 1.4rem;
+}
+.error{
+    color: red;
+    font-style: italic;
+    padding-top:10%;
+}

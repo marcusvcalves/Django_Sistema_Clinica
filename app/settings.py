@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Sistema',
-    'cpf_field',
 ]
 STATIC_URL = '/Sistema/static/'
 STATICFILES_DIRS = (
