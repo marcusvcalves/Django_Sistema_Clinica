@@ -1,4 +1,4 @@
-from .models import Cliente, Receita, Despesa, Events
+from .models import Cliente, Receita, Despesa, Event
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
@@ -32,30 +32,6 @@ def logout_view(request):
 @login_required(login_url='/login')
 def home(request):
     return render(request, "index.html")
-
-@login_required(login_url='/login')
-def agenda(request):
-    events = Events.objects.all()
-    context = {
-        "events": events,
-    }
-    return render(request, "agenda.html", context)
-
-@login_required(login_url='/login')
-def all_events(request):
-    all_events = Events.objects.all()
-    out = []
-    for event in all_events:
-        start = timezone.localtime(event.start)
-        end = timezone.localtime(event.end)
-        
-        out.append({
-            'title': event.name,
-            'id': event.id,
-            'start': start.strftime('%Y-%m-%d %H:%M:00'),
-            'end': end.strftime('%Y-%m-%d %H:%M:00'),
-        })
-    return JsonResponse(out, safe=False)
 
 
 @login_required(login_url='/login')
@@ -99,7 +75,6 @@ def cadastrar_usuario(request):
     else:
         return HttpResponseRedirect('/clientes')
 
-# @login_required(login_url='/login')
 
 @login_required(login_url='/login')
 def editar_usuario(request, cliente_id):
@@ -131,6 +106,10 @@ def excluir_usuario(request, cliente_id):
 def confirmar_exclusao(request, cliente_id):
     cliente = get_object_or_404(Cliente, id=cliente_id)
     return render(request, "confirmar_exclusao_cliente.html", {'cliente': cliente})
+
+@login_required(login_url='/login')
+def dentistas(request):
+    return render(request, "dentistas.html")
 
 
 @login_required(login_url='/login')
@@ -218,13 +197,56 @@ def editar_despesa(request, despesa_id):
     return render(request, "editar_despesa.html", {'despesa': despesa})
 
 @login_required(login_url='/login')
-def confirmar_exclusao_despesa(request, despesa_id):
-    despesa = get_object_or_404(Despesa, id=despesa_id)
-    return render(request, "confirmar_exclusao_despesa.html", {'despesa': despesa})
-
-@login_required(login_url='/login')
 def excluir_despesa(request, despesa_id):
     despesa = Despesa.objects.filter(id=despesa_id)
     despesa.delete()
     return HttpResponseRedirect('/financeiro?pg=1')
 
+@login_required(login_url='/login')
+def confirmar_exclusao_despesa(request, despesa_id):
+    despesa = get_object_or_404(Despesa, id=despesa_id)
+    return render(request, "confirmar_exclusao_despesa.html", {'despesa': despesa})
+
+
+@login_required(login_url='/login')
+def agenda(request):
+    events = Event.objects.all()
+    context = {
+        "events": events,
+    }
+    return render(request, "agenda.html", context)
+
+@login_required(login_url='/login')
+def all_events(request):
+    all_events = Event.objects.all()
+    out = []
+    for event in all_events:
+        start = timezone.localtime(event.start)
+        end = timezone.localtime(event.end)
+        
+        out.append({
+            'title': event.name,
+            'id': event.id,
+            'start': start.strftime('%Y-%m-%d %H:%M:00'),
+            'end': end.strftime('%Y-%m-%d %H:%M:00'),
+        })
+    return JsonResponse(out, safe=False)
+
+@login_required(login_url='/login')
+def cadastrar_evento(request):
+        if request.method == 'POST':
+            event = Event()
+            event.name = request.POST.get('eventName')
+            event.start = request.POST.get('eventDate')
+            event.end = request.POST.get('eventDate')
+            event.save()
+            return HttpResponseRedirect('/agenda')
+
+        else:
+            return HttpResponseRedirect('/agenda')
+        
+@login_required(login_url='/login')
+def editar_evento(request, event_id):
+    evento = Event.objects.get(pk=event_id)
+    return HttpResponseRedirect('/agenda')
+        

@@ -25,27 +25,22 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Adicionar novo evento</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Adicionar nova consulta</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body row">
-            <form action="{% url 'cadastrar_usuario' %}" method="POST">
+            <form action="{% url 'cadastrar_evento' %}" method="POST">
             {% csrf_token %}
               <div class="mb-3">
-                <label for="name" class="form-label">Paciente</label>
-                <input type="text" class="form-control">
+                <label for="eventName" class="form-label" id="eventName">Paciente</label>
+                <input type="text" class="form-control" name="eventName">
               </div>
               <div class="mb-3">
-                <label for="date" class="form-label">Data</label>
-                <input type="date" class="form-control">
+                <label for="eventDate" class="form-label">Data</label>
+                <input type="datetime-local" class="form-control" name="eventDate">
               </div>
-              <div class="mb-3">
-                <label for="time" class="form-label">Horário</label>
-                <input type="time" class="form-control">
-              </div>
-                
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Enviar">
+            <input type="submit" class="btn btn-primary" id="submitButton" value="Enviar">
             <input type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="Fechar">
           </div>
         </form>
@@ -53,9 +48,78 @@
       </div>
     </div>
     </div>
-    <button type="button" class="btn btn-success col-lg-2 col-4 " data-bs-toggle="modal" data-bs-target="#modalAdicionarEvento">Adicionar Evento</button>
+    <div class="modal fade" id="modalEditarEvento" tabindex="-1" aria-labelledby="modalEditarEvento" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Editar consulta</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body row">
+            <form action="{% url 'editar_evento' event_id=event.pk %}" method="POST">
+            {% csrf_token %}
+              <div class="mb-3">
+                <label for="eventName" class="form-label" id="eventName">Paciente</label>
+                <input type="text" class="form-control" name="eventName" value="{{event.name}}">
+              </div>
+              <div class="mb-3">
+                <label for="eventDate" class="form-label">Data</label>
+                <input type="datetime-local" class="form-control" name="eventDate">
+              </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-primary" id="submitButton" value="Enviar">
+            <input type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="Fechar">
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    </div>
   <div id='calendar'>
+
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      events: '/all_events',
+      customButtons: {
+        adicionarConsulta: {
+        text: 'Adicionar Consulta',
+        click: function() {
+          $('#modalAdicionarEvento').modal('toggle');
+          }
+        }
+      },
+      eventClick: function(info) {
+        $('#modalEditarEvento').modal('toggle');
+    },
+      timeZone: moment.tz('America/Argentina/Buenos_Aires'),
+      headerToolbar: {
+        left: 'prev today next',
+        center: 'title',
+        right: 'adicionarConsulta'
+      },
+      buttonText: {
+        today:'Mês atual',
+        month:'Mês',
+        week:'Semana',
+        day:'Dia',
+        list:'Lista'
+      },
+      locale: 'pt-br',
+      initialView: 'dayGridMonth',
+      dayMaxEvents: 5,
+      showNonCurrentDates:false, 
+    });
+    calendar.render();
+   } 
+  );
+
+  
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.32/moment-timezone-with-data-10-year-range.min.js"></script>
   <script
@@ -64,6 +128,6 @@
   crossorigin="anonymous"
   ></script>
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
-  <script src="{% static 'js/agenda.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   </body>
 </html>
