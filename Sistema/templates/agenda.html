@@ -32,8 +32,12 @@
             <form action="{% url 'cadastrar_evento' %}" method="POST">
             {% csrf_token %}
               <div class="mb-3">
-                <label for="eventName" class="form-label" id="eventName">Paciente</label>
-                <input type="text" class="form-control" name="eventName">
+                <label for="eventClient" class="form-label" id="eventClient">Paciente</label>
+                <select name="eventClient" class="form-select form-select-lg">
+                  {% for cliente in clientes %}
+                    <option value="{{ cliente.id }}">{{ cliente.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
               <div class="mb-3">
                 <label for="eventDate" class="form-label">Data</label>

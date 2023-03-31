@@ -17,7 +17,7 @@ class Cliente(models.Model):
         max_length=1, choices=GENDER, blank=True, null=True)
 
     def __str__(self):
-        template = '{0.name}, {0.phone}, {0.cpf}, {0.cep},  {0.address}, {0.birthDate}, {0.gender}'
+        template = ' {0.name}, Telefone: {0.phone}, CPF: {0.cpf}, CEP: {0.cep},  Endereço: {0.address}, Data de Nascimento:{0.birthDate}, Gênero: {0.gender}'
         return template.format(self)
 
 class Dentista(models.Model):
@@ -43,7 +43,7 @@ class Dentista(models.Model):
 class Receita(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     value = models.DecimalField(max_digits=12,decimal_places=2)
-    professional = models.CharField(max_length=100, blank=True, null=True)
+    dentista = models.ForeignKey(Dentista, on_delete=models.CASCADE)
     desc = models.CharField(max_length=300, blank=True, null=True)
     pago = models.BooleanField(default=False, blank=True, null=True)
 
@@ -70,11 +70,11 @@ class Caixa(models.Model):
     
 
 class Event(models.Model):
-    name= models.CharField(max_length=255,null=True,blank=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     start= models.DateTimeField(null=True,blank=True)
     end= models.DateTimeField(null=True,blank=True)
 
     def __str__(self):
-        template = '{0.id}, {0.name}, {0.start}, {0.end}'
+        template = '{0.id}, {0.cliente}, {0.start}, {0.end}'
         return template.format(self)
     

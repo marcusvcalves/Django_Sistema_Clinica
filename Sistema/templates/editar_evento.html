@@ -25,8 +25,15 @@
         <form action="" method="POST" class="editarForm">
             {% csrf_token %}
               <div class="mb-3">
-                <label for="eventName" class="form-label" id="eventName">Paciente</label>
-                <input type="text" class="form-control" name="eventName" value="{{event.name}}">
+                <label for="eventClient" class="form-label" id="eventClient">Paciente</label>
+                <select name="eventClient" class="form-select form-select-lg">
+                  <option value="{{ event.cliente.id }}" selected>{{ event.cliente.name }}</option>
+                  {% for cliente in clientes %}
+                      {% if cliente.id != event.cliente.id %}
+                          <option value="{{ cliente.id }}">{{ cliente.name }}</option>
+                      {% endif %}
+                  {% endfor %}
+              </select>
               </div>
               <div class="mb-3">
                 <label for="eventDate" class="form-label">Data</label>

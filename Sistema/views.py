@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.core import serializers
 
 def login_view(request):
     if request.method == "POST":
@@ -211,11 +211,26 @@ def confirmar_exclusao_despesa(request, despesa_id):
 @login_required(login_url='/login')
 def agenda(request):
     events = Event.objects.all()
+    clientes = Cliente.objects.all().order_by('name')
     context = {
         "events": events,
+        "clientes": clientes,
     }
     return render(request, "agenda.html", context)
 
+
+def serialize_cliente(cliente):
+    return {
+        'id': cliente.id,
+        'name': cliente.name,
+        'email': cliente.email,
+        'cpf': cliente.cpf,
+        'cep': cliente.cep,
+        'endereco': cliente.address,
+        'dataNascimento': cliente.birthDate,
+        'genero': cliente.gender,
+
+    }
 
 @login_required(login_url='/login')
 def all_events(request):
@@ -224,9 +239,10 @@ def all_events(request):
     for event in all_events:
         start = timezone.localtime(event.start)
         end = timezone.localtime(event.end)
+        cliente_dict = serialize_cliente(event.cliente)
         
         out.append({
-            'title': event.name,
+            'title': cliente_dict["name"],
             'id': event.id,
             'start': start.strftime('%Y-%m-%d %H:%M:00'),
             'end': end.strftime('%Y-%m-%d %H:%M:00'),
@@ -237,7 +253,9 @@ def all_events(request):
 def cadastrar_evento(request):
         if request.method == 'POST':
             event = Event()
-            event.name = request.POST.get('eventName')
+            clientID = request.POST.get('eventClient')
+            cliente = Cliente.objects.get(id=clientID)
+            event.cliente = cliente
             event.start = request.POST.get('eventDate')
             event.end = request.POST.get('eventDate')
             event.save()
@@ -249,14 +267,17 @@ def cadastrar_evento(request):
 @login_required(login_url='/login')
 def editar_evento(request, event_id):
         event = get_object_or_404(Event, id=event_id)
+        clientes = Cliente.objects.all().order_by('name')
         if request.method == 'POST':
-            event.name = request.POST.get('eventName')
+            clientID = request.POST.get('eventClient')
+            cliente = Cliente.objects.get(id=clientID)
+            event.cliente = cliente
             event.start = request.POST.get('eventDate')
             event.end = request.POST.get('eventDate')
             event.save()
             return HttpResponseRedirect('/agenda')
 
-        return render(request, "editar_evento.html", {'event': event})
+        return render(request, "editar_evento.html", {'event': event, 'clientes': clientes})
         
 
 @login_required(login_url='/login')
