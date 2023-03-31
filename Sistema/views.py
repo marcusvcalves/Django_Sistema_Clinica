@@ -216,6 +216,7 @@ def agenda(request):
     }
     return render(request, "agenda.html", context)
 
+
 @login_required(login_url='/login')
 def all_events(request):
     all_events = Event.objects.all()
@@ -247,6 +248,24 @@ def cadastrar_evento(request):
         
 @login_required(login_url='/login')
 def editar_evento(request, event_id):
-    evento = Event.objects.get(pk=event_id)
-    return HttpResponseRedirect('/agenda')
+        event = get_object_or_404(Event, id=event_id)
+        if request.method == 'POST':
+            event.name = request.POST.get('eventName')
+            event.start = request.POST.get('eventDate')
+            event.end = request.POST.get('eventDate')
+            event.save()
+            return HttpResponseRedirect('/agenda')
+
+        return render(request, "editar_evento.html", {'event': event})
         
+
+@login_required(login_url='/login')
+def confirmar_exclusao_evento(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    return render(request, "confirmar_exclusao_evento.html", {'event': event})
+
+@login_required(login_url='/login')
+def excluir_evento(request, event_id):
+    event = Event.objects.filter(id=event_id)
+    event.delete()
+    return HttpResponseRedirect('/agenda')

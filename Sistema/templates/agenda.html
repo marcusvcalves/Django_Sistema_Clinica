@@ -48,33 +48,6 @@
       </div>
     </div>
     </div>
-    <div class="modal fade" id="modalEditarEvento" tabindex="-1" aria-labelledby="modalEditarEvento" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Editar consulta</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body row">
-            <form action="{% url 'editar_evento' event_id=event.pk %}" method="POST">
-            {% csrf_token %}
-              <div class="mb-3">
-                <label for="eventName" class="form-label" id="eventName">Paciente</label>
-                <input type="text" class="form-control" name="eventName" value="{{event.name}}">
-              </div>
-              <div class="mb-3">
-                <label for="eventDate" class="form-label">Data</label>
-                <input type="datetime-local" class="form-control" name="eventDate">
-              </div>
-          <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" id="submitButton" value="Enviar">
-            <input type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="Fechar">
-          </div>
-        </form>
-        </div>
-      </div>
-    </div>
-    </div>
   <div id='calendar'>
 
   </div>
@@ -82,7 +55,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-
+    
     var calendar = new FullCalendar.Calendar(calendarEl, {
       events: '/all_events',
       customButtons: {
@@ -94,13 +67,16 @@
         }
       },
       eventClick: function(info) {
-        $('#modalEditarEvento').modal('toggle');
-    },
+        var eventObj = info.event;
+            if (eventObj.id) {
+              window.location.replace('editar_evento/'+eventObj.id);
+            }
+        },
       timeZone: moment.tz('America/Argentina/Buenos_Aires'),
       headerToolbar: {
-        left: 'prev today next',
+        left: 'prev today next adicionarConsulta',
         center: 'title',
-        right: 'adicionarConsulta'
+        right: ''
       },
       buttonText: {
         today:'Mês atual',
