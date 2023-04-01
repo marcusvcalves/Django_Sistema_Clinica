@@ -20,35 +20,22 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/financeiro.css' %}"/>
   </head>
   <body>
-    {% include 'navbar.html' %} 
+    {% include 'navbar/navbar.html' %} 
     <div class="editContainer">
         <form class="editarForm" action="." method="POST">
-            {% csrf_token %} 
+            {% csrf_token %}
             <div class="mb-3">
-              <label for="valorReceita" class="form-label">Valor</label>
-              <input type="number" value="{{receita.value|stringformat:'.2f'}}" step="0.01" class="form-control" id="valorReceita" name="valorReceita" aria-describedby="valorReceita">
+              <label for="valorDespesa" class="form-label">Valor</label>
+              <input type="number" value="{{despesa.value|stringformat:'.2f'}}" step="0.01" class="form-control" id="valorDespesa" aria-describedby="valorDespesa" name="valorDespesa">
             </div>
             <div class="mb-3">
-              <label for="profissionalReceita" class="form-label">Dentista</label>
-              <input type="text" value="{{receita.professional}}" class="form-control" id="profissionalReceita" name="profissionalReceita" aria-describedby="profissionalReceita">
-            </div>
-            <div class="mb-3">
-              <label for="descricaoReceita" class="form-label">Descrição</label>
-              <input type="text" value="{{receita.desc}}" class="form-control" id="descricaoReceita" name="descricaoReceita" aria-describedby="descricaoReceita">
-            </div>
-            <div>
-              {% if receita.pago == True %}
-              <input type="checkbox" id="pagoReceita" name="pagoReceita" checked>
-              <label for="pagoReceita">Pago</label>
-              {% elif receita.pago == False %}
-              <input type="checkbox" id="pagoReceita" name="pagoReceita">
-              <label for="pagoReceita">Pago</label>
-              {% endif %}
+              <label for="descricaoDespesa" class="form-label">Descrição</label>
+              <input type="text" value ="{{despesa.desc}}" class="form-control" id="descricaoDespesa" aria-describedby="descricaoDespesa" name="descricaoDespesa">
             </div>
             <div class="Buttons">
               <input type="submit" class="btn btn-primary" value="Salvar" />
-              <input type="button" class="btn btn-primary" onclick="window.location.href='/financeiro';" value="Voltar"/>
-              <a href="{% url 'confirmar_exclusao_receita' receita.id %}" id="delete-user-link" data-user-id="{{ receita.id }}">
+              <input type="button" class="btn btn-primary" onclick="window.location.href='/financeiro?pg=1';" value="Voltar"/>
+              <a href="{% url 'confirmar_exclusao_despesa' despesa.id %}" id="delete-user-link" data-user-id="{{ despesa.id }}">
                 <input type="button" class="btn btn-danger" value="Excluir" />
               </a>
             </div>

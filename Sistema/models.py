@@ -36,7 +36,7 @@ class Dentista(models.Model):
         max_length=1, choices=GENDER, blank=True, null=True)
 
     def __str__(self):
-        template = '{0.name}, {0.phone}, {0.cpf}, {0.cep},  {0.address}, {0.birthDate}, {0.gender}'
+        template = ' {0.name}, Telefone: {0.phone}, CPF: {0.cpf}, CEP: {0.cep},  Endereço: {0.address}, Data de Nascimento:{0.birthDate}, Gênero: {0.gender}'
         return template.format(self)
 
 
@@ -71,6 +71,7 @@ class Caixa(models.Model):
 
 class Event(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    dentista = models.ForeignKey(Dentista, on_delete=models.CASCADE)
     start= models.DateTimeField(null=True,blank=True)
     end= models.DateTimeField(null=True,blank=True)
 

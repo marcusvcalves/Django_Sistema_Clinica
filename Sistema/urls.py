@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import home, clientes, agenda, financeiro, cadastrar_usuario, editar_usuario, excluir_usuario, confirmar_exclusao, cadastrar_transacao
 from .views import editar_receita, excluir_receita, confirmar_exclusao_receita, editar_despesa, excluir_despesa, confirmar_exclusao_despesa, all_events, login_view, logout_view
-from .views import cadastrar_evento, dentistas, editar_evento, confirmar_exclusao_evento, excluir_evento
+from .views import cadastrar_evento, dentistas, editar_evento, confirmar_exclusao_evento, excluir_evento, cadastrar_dentista, editar_dentista, excluir_dentista, confirmar_exclusao_dentista
 
 urlpatterns = [
     path('login', login_view),
@@ -14,6 +14,10 @@ urlpatterns = [
     path('excluir/<int:cliente_id>/', excluir_usuario, name="excluir_usuario"),
     path('confirmar/<int:cliente_id>/', confirmar_exclusao, name="confirmar_exclusao"),
     path('dentistas', dentistas),
+    path('dentistas/', cadastrar_dentista, name="cadastrar_dentista"),
+    path('editar_dentista/<int:dentista_id>/', editar_dentista, name="editar_dentista"),
+    path('excluir_dentista/<int:dentista_id>/', excluir_dentista, name="excluir_dentista"),
+    path('confirmar_exclusao_dentista/<int:dentista_id>/', confirmar_exclusao_dentista, name="confirmar_exclusao_dentista"),
     path('financeiro', financeiro),
     path('financeiro/', cadastrar_transacao, name="cadastrar_transacao"),
     path('editar_receita/<int:receita_id>/', editar_receita, name="editar_receita"),

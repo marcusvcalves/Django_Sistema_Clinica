@@ -20,7 +20,7 @@
     <title>Agenda</title>
   </head>
   <body>
-    {% include 'navbar.html' %} 
+    {% include 'navbar/navbar.html' %} 
     <div class="modal fade" id="modalAdicionarEvento" tabindex="-1" aria-labelledby="modalAdicionarEvento" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -33,15 +33,25 @@
             {% csrf_token %}
               <div class="mb-3">
                 <label for="eventClient" class="form-label" id="eventClient">Paciente</label>
-                <select name="eventClient" class="form-select form-select-lg">
+                <select name="eventClient" class="form-select form-select-lg" required>
+                  <option value="" disabled selected>Escolha um paciente</option>
                   {% for cliente in clientes %}
                     <option value="{{ cliente.id }}">{{ cliente.name }}</option>
                   {% endfor %}
                 </select>
               </div>
               <div class="mb-3">
+                <label for="eventDentist" class="form-label" id="eventDentist">Dentista</label>
+                <select name="eventDentist" class="form-select form-select-lg" required>
+                  <option value="" disabled selected>Escolha um dentista</option>
+                  {% for dentista in dentistas %}
+                    <option value="{{ dentista.id }}">{{ dentista.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
                 <label for="eventDate" class="form-label">Data</label>
-                <input type="datetime-local" class="form-control" name="eventDate">
+                <input type="datetime-local" class="form-control" name="eventDate" required>
               </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-primary" id="submitButton" value="Enviar">
@@ -62,6 +72,10 @@
     
     var calendar = new FullCalendar.Calendar(calendarEl, {
       events: '/all_events',
+      eventTimeFormat: { // like '14:30:00'
+      hour: '2-digit',
+      minute: '2-digit',
+      },
       customButtons: {
         adicionarConsulta: {
         text: 'Adicionar Consulta',

@@ -3,8 +3,8 @@ const handlePhone = (event) => {
     input.value = phoneMask(input.value)
   }
 
-  const phoneMask = (value) => {
-    if (!value) return ""
+const phoneMask = (value) => {
+if (!value) return ""
     value = value.replace(/\D/g,'')
     value = value.replace(/(\d{2})(\d)/,"($1) $2")
     value = value.replace(/(\d)(\d{4})$/,"$1-$2")
@@ -17,12 +17,11 @@ function cepMascara(cep) {
     }
 }
 
-const input = document.getElementById('clienteCpf');
+const input = document.getElementById('Cpf');
 
 input.addEventListener('keypress', () => {
-    let inputLength = input.value.length
-
-
+    let inputLength = input.value.length;
+    
     if (inputLength == 3 || inputLength == 7) {
         input.value += '.'
     }else if (inputLength == 11) {

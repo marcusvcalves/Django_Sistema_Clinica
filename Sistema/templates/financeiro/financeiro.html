@@ -21,7 +21,7 @@
     <title>Financeiro</title>
   </head>
   <body>
-    {% include 'navbar.html' %} 
+    {% include 'navbar/navbar.html' %} 
   <div class="modal fade" id="modalReceita" tabindex="-1" aria-labelledby="modalReceita" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -34,11 +34,16 @@
             {% csrf_token %} 
             <div class="mb-3">
               <label for="valorReceita" class="form-label">Valor<span class="red">*</span></label>
-              <input type="number" step="0.01" class="form-control" id="valorReceita" name="valorReceita" aria-describedby="valorReceita">
+              <input type="number" min="0" step="0.01" class="form-control" id="valorReceita" name="valorReceita" aria-describedby="valorReceita" required>
             </div>
             <div class="mb-3">
-              <label for="profissionalReceita" class="form-label">Dentista</label>
-              <input type="text" class="form-control" id="profissionalReceita" name="profissionalReceita" aria-describedby="profissionalReceita">
+              <label for="dentistaReceita" class="form-label" id="dentistaReceita">Dentista</label>
+              <select name="dentistaReceita" class="form-select form-select-lg" required>
+                <option value="" disabled selected>Escolha um dentista</option>
+                {% for dentista in dentistas %}
+                  <option value="{{ dentista.id }}">{{ dentista.name }}</option>
+                {% endfor %}
+              </select>
             </div>
             <div class="mb-3">
               <label for="descricaoReceita" class="form-label">Descrição</label>
@@ -69,7 +74,7 @@
             {% csrf_token %}
             <div class="mb-3">
               <label for="valorDespesa" class="form-label">Valor<span class="red">*</span></label>
-              <input type="number" step="0.01" class="form-control" id="valorDespesa" aria-describedby="valorDespesa" name="valorDespesa">
+              <input type="number" step="0.01" class="form-control" id="valorDespesa" aria-describedby="valorDespesa" name="valorDespesa" required>
             </div>
             <div class="mb-3">
               <label for="descricaoDespesa" class="form-label">Descrição</label>
@@ -126,7 +131,7 @@
                     <tr>
                       <td>{{r.date|date:"d/m/Y, G:i:s"}}</td>
                       <td>{{r.value}}</td>
-                      <td>{{r.professional}}</td>
+                      <td>{{r.dentista.name}}</td>
                       <td>{{r.desc}}</td>
                       {% if r.pago == True %}
                       <td>Sim</td>

@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/financeiro.css' %}"/>
   </head>
   <body>
-    {% include 'navbar.html' %} 
+    {% include 'navbar/navbar.html' %} 
     <div class="editContainer">
         <form action="" method="POST" class="editarForm">
             {% csrf_token %}
@@ -31,6 +31,17 @@
                   {% for cliente in clientes %}
                       {% if cliente.id != event.cliente.id %}
                           <option value="{{ cliente.id }}">{{ cliente.name }}</option>
+                      {% endif %}
+                  {% endfor %}
+              </select>
+              </div>
+              <div class="mb-3">
+                <label for="eventDentist" class="form-label" id="eventDentist">Dentista</label>
+                <select name="eventDentist" class="form-select form-select-lg">
+                  <option value="{{ event.dentista.id }}" selected>{{ event.dentista.name }}</option>
+                  {% for dentista in dentistas %}
+                      {% if dentista.id != event.dentista.id %}
+                          <option value="{{ dentista.id }}">{{ dentista.name }}</option>
                       {% endif %}
                   {% endfor %}
               </select>

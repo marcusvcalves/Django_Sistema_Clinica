@@ -1,4 +1,4 @@
-from .models import Cliente, Receita, Despesa, Event
+from .models import Cliente, Receita, Despesa, Event, Dentista
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
@@ -17,11 +17,11 @@ def login_view(request):
             return redirect('/')
         if user is None:
             context = {"error": "Usuário ou senha inválidos."}
-            return render(request, "login.html", context)
+            return render(request, "login/login.html", context)
     if request.user.is_authenticated:
         return redirect(home)
     else:
-        return render(request, "login.html")
+        return render(request, "login/login.html")
 
 
 @login_required(login_url='/login')
@@ -31,7 +31,7 @@ def logout_view(request):
 
 @login_required(login_url='/login')
 def home(request):
-    return render(request, "index.html")
+    return render(request, "home/index.html")
 
 
 @login_required(login_url='/login')
@@ -46,9 +46,9 @@ def clientes(request):
         context = {
             'clientes' : clientes
             }
-        return render(request, "clientes.html", context)
+        return render(request, "clientes/clientes.html", context)
     else:
-        return render(request, "clientes.html", {"clientes": clientes})
+        return render(request, "clientes/clientes.html", {"clientes": clientes})
 
 
 
@@ -94,7 +94,7 @@ def editar_usuario(request, cliente_id):
             cliente.gender = request.POST.get('clientGender')
             cliente.save()
             return HttpResponseRedirect('/clientes')
-    return render(request, "editar_cliente.html", {'cliente': cliente})
+    return render(request, "clientes/editar_cliente.html", {'cliente': cliente})
 
 @login_required(login_url='/login')
 def excluir_usuario(request, cliente_id):
@@ -105,28 +105,98 @@ def excluir_usuario(request, cliente_id):
 @login_required(login_url='/login')
 def confirmar_exclusao(request, cliente_id):
     cliente = get_object_or_404(Cliente, id=cliente_id)
-    return render(request, "confirmar_exclusao_cliente.html", {'cliente': cliente})
+    return render(request, "clientes/confirmar_exclusao_cliente.html", {'cliente': cliente})
 
 @login_required(login_url='/login')
 def dentistas(request):
-    return render(request, "dentistas.html")
+    p = Paginator(Dentista.objects.get_queryset().order_by('id'), 10)
+    page = request.GET.get('page')
+    dentistas = p.get_page(page)
+
+    if 'q' in request.GET:
+        q = request.GET.get('q')
+        dentistas = Dentista.objects.all().filter(name__icontains=q)
+        context = {
+            'dentistas' : dentistas
+            }
+        return render(request, "dentistas/dentistas.html", context)
+    else:
+        return render(request, "dentistas/dentistas.html", {"dentistas": dentistas})
+
+@login_required(login_url='/login')
+def cadastrar_dentista(request):
+    if request.method == 'POST':
+        if request.POST.get('dentistName'):
+            dentista = Dentista()
+            dentista.name = request.POST.get('dentistName')
+            dentista.phone = request.POST.get('dentistPhone')
+            dentista.email = request.POST.get('dentistEmail')
+            dentista.cpf = request.POST.get('dentistCpf')
+            dentista.cep = request.POST.get('dentistCep')
+            dentista.address = request.POST.get('dentistAddress')
+            if (request.POST.get('dentistBirth') == ""):
+                dentista.birthDate = None
+            else:
+                dentista.birthDate = request.POST.get('dentistBirth')
+            dentista.gender = request.POST.get('dentistGender')
+            dentista.save()
+
+            return HttpResponseRedirect('/dentistas')
+
+    else:
+        return HttpResponseRedirect('/dentistas')
+
+
+@login_required(login_url='/login')
+def editar_dentista(request, dentista_id):
+    dentista = Dentista.objects.get(id=dentista_id)
+    if request.method == 'POST':
+        if request.POST.get('clientName'):
+            dentista.name = request.POST.get('clientName')
+            dentista.phone = request.POST.get('clientPhone')
+            dentista.email = request.POST.get('clientEmail')
+            dentista.cpf = request.POST.get('clientCpf')
+            dentista.cep = request.POST.get('clientCep')
+            dentista.address = request.POST.get('clientAddress')
+            if (request.POST.get('clientBirth') == ""):
+                dentista.birthDate = None
+            else:
+                dentista.birthDate = request.POST.get('clientBirth')
+            dentista.gender = request.POST.get('clientGender')
+            dentista.save()
+            return HttpResponseRedirect('/clientes')
+    return render(request, "dentistas/editar_dentista.html", {'dentista': dentista})
+
+@login_required(login_url='/login')
+def excluir_dentista(request, dentista_id):
+    dentista = Dentista.objects.filter(id=dentista_id)
+    dentista.delete()
+    return HttpResponseRedirect('/dentistas')
+
+@login_required(login_url='/login')
+def confirmar_exclusao_dentista(request, dentista_id):
+    dentista = get_object_or_404(Dentista, id=dentista_id)
+    return render(request, "dentistas/confirmar_exclusao_dentista.html", {'dentista': dentista})
 
 
 @login_required(login_url='/login')
 def financeiro(request):
     pReceita = Paginator(Receita.objects.get_queryset().order_by('id'),10)
     pDespesa = Paginator(Despesa.objects.get_queryset().order_by('id'),10)
+    dentistas = Dentista.objects.all().order_by('name')
     page = request.GET.get('page')
     pg = request.GET.get('pg')
     receita = pReceita.get_page(page)
     despesa = pDespesa.get_page(pg)
     tab_shown = "receita" if page else "despesa" if pg else "receita"
-
-    return render(request, "financeiro.html", {
+    context = {
         "receita": receita,
         "despesa": despesa,
         "tab_shown": tab_shown,
-        })
+        "dentistas": dentistas
+    }
+
+    return render(request, "financeiro/financeiro.html", context)
 
 @login_required(login_url='/login')
 def cadastrar_transacao(request):
@@ -134,7 +204,9 @@ def cadastrar_transacao(request):
         if request.POST.get('valorReceita'):
             receita = Receita()
             receita.value = request.POST.get('valorReceita')
-            receita.professional = request.POST.get('profissionalReceita')
+            dentistID = request.POST.get('dentistaReceita')
+            dentista = Dentista.objects.get(id=dentistID)
+            receita.dentista = dentista
             receita.desc = request.POST.get('descricaoReceita')
             pago = request.POST.get('pagoReceita')
             if(pago == "on"):
@@ -158,6 +230,7 @@ def cadastrar_transacao(request):
 @login_required(login_url='/login')
 def editar_receita(request, receita_id):
     receita = Receita.objects.get(id=receita_id)
+    dentistas = Dentista.objects.all().order_by('name')
     if request.method == 'POST':
         if request.POST.get('valorReceita'):
             receita.value = request.POST.get('valorReceita')
@@ -171,12 +244,16 @@ def editar_receita(request, receita_id):
             receita.save()
 
             return HttpResponseRedirect('/financeiro')
-    return render(request, "editar_receita.html", {'receita': receita})
+    context = {
+        'receita': receita,
+        'dentistas': dentistas
+    }
+    return render(request, "financeiro/editar_receita.html", context)
 
 @login_required(login_url='/login')
 def confirmar_exclusao_receita(request, receita_id):
     receita = get_object_or_404(Receita, id=receita_id)
-    return render(request, "confirmar_exclusao_receita.html", {'receita': receita})
+    return render(request, "financeiro/confirmar_exclusao_receita.html", {'receita': receita})
 
 @login_required(login_url='/login')
 def excluir_receita(request, receita_id):
@@ -194,7 +271,7 @@ def editar_despesa(request, despesa_id):
             despesa.save()
 
             return HttpResponseRedirect('/financeiro?pg=1')
-    return render(request, "editar_despesa.html", {'despesa': despesa})
+    return render(request, "financeiro/editar_despesa.html", {'despesa': despesa})
 
 @login_required(login_url='/login')
 def excluir_despesa(request, despesa_id):
@@ -205,18 +282,20 @@ def excluir_despesa(request, despesa_id):
 @login_required(login_url='/login')
 def confirmar_exclusao_despesa(request, despesa_id):
     despesa = get_object_or_404(Despesa, id=despesa_id)
-    return render(request, "confirmar_exclusao_despesa.html", {'despesa': despesa})
+    return render(request, "financeiro/confirmar_exclusao_despesa.html", {'despesa': despesa})
 
 
 @login_required(login_url='/login')
 def agenda(request):
     events = Event.objects.all()
     clientes = Cliente.objects.all().order_by('name')
+    dentistas = Dentista.objects.all().order_by('name')
     context = {
         "events": events,
         "clientes": clientes,
+        "dentistas": dentistas
     }
-    return render(request, "agenda.html", context)
+    return render(request, "agenda/agenda.html", context)
 
 
 def serialize_cliente(cliente):
@@ -256,6 +335,9 @@ def cadastrar_evento(request):
             clientID = request.POST.get('eventClient')
             cliente = Cliente.objects.get(id=clientID)
             event.cliente = cliente
+            dentistID = request.POST.get('eventDentist')
+            dentista = Dentista.objects.get(id=dentistID)
+            event.dentista = dentista
             event.start = request.POST.get('eventDate')
             event.end = request.POST.get('eventDate')
             event.save()
@@ -268,6 +350,13 @@ def cadastrar_evento(request):
 def editar_evento(request, event_id):
         event = get_object_or_404(Event, id=event_id)
         clientes = Cliente.objects.all().order_by('name')
+        dentista = Dentista.objects.all().order_by('name')
+        context = {
+        "event": event,
+        "clientes": clientes,
+        "dentistas": dentista
+        }
+
         if request.method == 'POST':
             clientID = request.POST.get('eventClient')
             cliente = Cliente.objects.get(id=clientID)
@@ -277,13 +366,13 @@ def editar_evento(request, event_id):
             event.save()
             return HttpResponseRedirect('/agenda')
 
-        return render(request, "editar_evento.html", {'event': event, 'clientes': clientes})
+        return render(request, "agenda/editar_evento.html", context)
         
 
 @login_required(login_url='/login')
 def confirmar_exclusao_evento(request, event_id):
     event = get_object_or_404(Event, id=event_id)
-    return render(request, "confirmar_exclusao_evento.html", {'event': event})
+    return render(request, "agenda/confirmar_exclusao_evento.html", {'event': event})
 
 @login_required(login_url='/login')
 def excluir_evento(request, event_id):
