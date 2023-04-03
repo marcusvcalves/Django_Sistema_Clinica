@@ -25,8 +25,8 @@
         <form action="" method="POST" class="editarForm">
             {% csrf_token %}
               <div class="mb-3">
-                <label for="eventClient" class="form-label" id="eventClient">Paciente</label>
-                <select name="eventClient" class="form-select form-select-lg">
+                <label for="eventClient" class="form-label" id="eventClient">Paciente<span class="red">*</span></label>
+                <select name="eventClient" class="form-select form-select-lg" required>
                   <option value="{{ event.cliente.id }}" selected>{{ event.cliente.name }}</option>
                   {% for cliente in clientes %}
                       {% if cliente.id != event.cliente.id %}
@@ -36,8 +36,8 @@
               </select>
               </div>
               <div class="mb-3">
-                <label for="eventDentist" class="form-label" id="eventDentist">Dentista</label>
-                <select name="eventDentist" class="form-select form-select-lg">
+                <label for="eventDentist" class="form-label" id="eventDentist">Dentista<span class="red">*</span></label>
+                <select name="eventDentist" class="form-select form-select-lg" required>
                   <option value="{{ event.dentista.id }}" selected>{{ event.dentista.name }}</option>
                   {% for dentista in dentistas %}
                       {% if dentista.id != event.dentista.id %}
@@ -47,8 +47,8 @@
               </select>
               </div>
               <div class="mb-3">
-                <label for="eventDate" class="form-label">Data</label>
-                <input type="datetime-local" class="form-control" name="eventDate" value="{{ event.start|date:'Y-m-d\TH:i' }}">
+                <label for="eventDate" class="form-label">Data<span class="red">*</span></label>
+                <input type="datetime-local" class="form-control" name="eventDate" value="{{ event.start|date:'Y-m-d\TH:i' }}" required>
               </div>
           <div class="buttons">
             <input type="submit" class="btn btn-primary" id="submitButton" value="Salvar">

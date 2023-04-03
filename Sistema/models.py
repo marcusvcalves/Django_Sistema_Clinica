@@ -48,7 +48,7 @@ class Receita(models.Model):
     pago = models.BooleanField(default=False, blank=True, null=True)
 
     def __str__(self):
-        template = '{0.date}, {0.value}, {0.professional}, {0.desc},  {0.pago}'
+        template = '{0.date}, {0.value}, {0.dentista}, {0.desc},  {0.pago}'
         return template.format(self)
 
 class Despesa(models.Model):
@@ -59,15 +59,6 @@ class Despesa(models.Model):
     def __str__(self):
         template = '{0.date}, {0.value}, {0.desc}'
         return template.format(self)
-
-class Caixa(models.Model):
-    date = models.DateTimeField(auto_now_add=True)
-    value = models.DecimalField(max_digits=12,decimal_places=3)
-
-    def __str__(self):
-        template = '{0.date}, {0.value}, {0.professional}, {0.desc}'
-        return template.format(self)
-    
 
 class Event(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)

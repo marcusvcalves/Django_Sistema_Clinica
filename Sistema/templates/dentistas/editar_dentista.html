@@ -23,7 +23,7 @@
     <form class="editarForm" action="." method="POST">
       {% csrf_token %}
       <div class="mb-3">
-        <label for="dentistName" class="form-label">Nome do Dentista:</label>
+        <label for="dentistName" class="form-label">Nome do Dentista<span class="red">*</span></label>
         <input
           type="text"
           pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"
@@ -35,7 +35,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="dentistPhone" class="form-label">Telefone:</label>
+        <label for="dentistPhone" class="form-label">Telefone</label>
         <input
           type="tel"
           onkeyup="handlePhone(event)"
@@ -46,7 +46,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="dentistEmail" class="form-label">Email:</label>   
+        <label for="dentistEmail" class="form-label">Email</label>   
         <input
           type="email"
           value="{{dentista.email}}"
@@ -56,7 +56,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="dentistCpf" class="form-label">CPF:</label>
+        <label for="dentistCpf" class="form-label">CPF</label>
         <input
           type="text"
           id="Cpf"
@@ -69,7 +69,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="dentistCep" class="form-label">CEP:</label>
+        <label for="dentistCep" class="form-label">CEP</label>
         <input
           type="text"
           minlength="9"
@@ -82,7 +82,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="dentistAddress" class="form-label">Endereço:</label>
+        <label for="dentistAddress" class="form-label">Endereço</label>
         <input
           type="text"
           value="{{dentista.address}}"
@@ -92,7 +92,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="dentistBirth">Data de Nascimento:</label>
+        <label for="dentistBirth">Data de Nascimento</label>
         <input
           name="dentistBirth"
           value="{{dentista.birthDate|date:'Y-m-d'}}"
@@ -100,7 +100,7 @@
           type="date"
         />
       </div>
-      <p>Gênero:</p>
+      <p>Gênero</p>
       <div class="form-check">
         <input
           class="form-check-input"

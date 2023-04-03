@@ -25,7 +25,7 @@
         <form class="editarForm" action="." method="POST">
             {% csrf_token %}
             <div class="mb-3">
-              <label for="valorDespesa" class="form-label">Valor</label>
+              <label for="valorDespesa" class="form-label">Valor<span class="red">*</span></label>
               <input type="number" value="{{despesa.value|stringformat:'.2f'}}" step="0.01" class="form-control" id="valorDespesa" aria-describedby="valorDespesa" name="valorDespesa">
             </div>
             <div class="mb-3">

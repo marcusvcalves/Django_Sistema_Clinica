@@ -32,7 +32,7 @@
             <form action="{% url 'cadastrar_evento' %}" method="POST">
             {% csrf_token %}
               <div class="mb-3">
-                <label for="eventClient" class="form-label" id="eventClient">Paciente</label>
+                <label for="eventClient" class="form-label" id="eventClient">Paciente<span class="red">*</span></label>
                 <select name="eventClient" class="form-select form-select-lg" required>
                   <option value="" disabled selected>Escolha um paciente</option>
                   {% for cliente in clientes %}
@@ -41,7 +41,7 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="eventDentist" class="form-label" id="eventDentist">Dentista</label>
+                <label for="eventDentist" class="form-label" id="eventDentist">Dentista<span class="red">*</span></label>
                 <select name="eventDentist" class="form-select form-select-lg" required>
                   <option value="" disabled selected>Escolha um dentista</option>
                   {% for dentista in dentistas %}
@@ -50,7 +50,7 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="eventDate" class="form-label">Data</label>
+                <label for="eventDate" class="form-label">Data<span class="red">*</span></label>
                 <input type="datetime-local" class="form-control" name="eventDate" required>
               </div>
           <div class="modal-footer">
@@ -90,7 +90,7 @@
               window.location.replace('editar_evento/'+eventObj.id);
             }
         },
-      timeZone: moment.tz('America/Argentina/Buenos_Aires'),
+      timeZone: moment.tz('America/Sao_Paulo'),
       headerToolbar: {
         left: 'prev today next adicionarConsulta',
         center: 'title',

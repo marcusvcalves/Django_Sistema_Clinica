@@ -37,7 +37,7 @@
               <input type="number" min="0" step="0.01" class="form-control" id="valorReceita" name="valorReceita" aria-describedby="valorReceita" required>
             </div>
             <div class="mb-3">
-              <label for="dentistaReceita" class="form-label" id="dentistaReceita">Dentista</label>
+              <label for="dentistaReceita" class="form-label" id="dentistaReceita">Dentista<span class="red">*</span></label>
               <select name="dentistaReceita" class="form-select form-select-lg" required>
                 <option value="" disabled selected>Escolha um dentista</option>
                 {% for dentista in dentistas %}

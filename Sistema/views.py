@@ -1,11 +1,15 @@
 from .models import Cliente, Receita, Despesa, Event, Dentista
+from django.db.models import Sum, F
+from django.db.models.functions import Coalesce
+from django.db.models.fields import DecimalField
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
+from datetime import datetime
+from decimal import Decimal
 
 def login_view(request):
     if request.method == "POST":
@@ -31,7 +35,26 @@ def logout_view(request):
 
 @login_required(login_url='/login')
 def home(request):
-    return render(request, "home/index.html")
+    date = datetime.now()
+    totalClientes = Cliente.objects.count()
+    totalDentistas = Dentista.objects.count()
+    receitaTotal = Receita.objects.filter(date__month=date.strftime("%m"), date__year=date.strftime("%Y")).aggregate(total=Coalesce(Sum(F('value')), 0, output_field=DecimalField()))
+    despesaTotal = Despesa.objects.filter(date__month=date.strftime("%m"), date__year=date.strftime("%Y")).aggregate(total=Coalesce(Sum(F('value')), 0, output_field=DecimalField()))
+    todayEvents = Event.objects.filter(start__day=date.strftime("%d"), start__month=date.strftime("%m"), start__year=date.strftime("%Y"))
+    eventsTodayCount = 0
+    for i in todayEvents:
+        eventsTodayCount += 1
+
+
+    
+    context = {
+        'totalClientes': totalClientes,
+        'totalDentistas': totalDentistas,
+        'receitaTotal': receitaTotal['total'],
+        'despesaTotal': despesaTotal['total'],
+        'eventsTodayCount': eventsTodayCount,
+    }
+    return render(request, "home/index.html", context)
 
 
 @login_required(login_url='/login')
