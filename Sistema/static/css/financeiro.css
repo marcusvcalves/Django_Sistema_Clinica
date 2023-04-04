@@ -23,3 +23,13 @@ a, a:visited { text-decoration: none; }
 th{
     color: white;
 }
+.filter{
+    padding-top:2%;
+}
+#sortForm{
+    padding-top:2%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}

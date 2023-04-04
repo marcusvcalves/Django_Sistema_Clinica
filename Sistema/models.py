@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Cliente(models.Model):
@@ -41,7 +42,7 @@ class Dentista(models.Model):
 
 
 class Receita(models.Model):
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now, editable=True)
     value = models.DecimalField(max_digits=12,decimal_places=2)
     dentista = models.ForeignKey(Dentista, on_delete=models.CASCADE)
     desc = models.CharField(max_length=300, blank=True, null=True)
@@ -52,7 +53,7 @@ class Receita(models.Model):
         return template.format(self)
 
 class Despesa(models.Model):
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now, editable=True)
     value = models.DecimalField(max_digits=12,decimal_places=2)
     desc = models.CharField(max_length=300, blank=True, null=True)
 

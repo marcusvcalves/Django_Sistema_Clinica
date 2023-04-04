@@ -18,7 +18,7 @@ urlpatterns = [
     path('editar_dentista/<int:dentista_id>/', editar_dentista, name="editar_dentista"),
     path('excluir_dentista/<int:dentista_id>/', excluir_dentista, name="excluir_dentista"),
     path('confirmar_exclusao_dentista/<int:dentista_id>/', confirmar_exclusao_dentista, name="confirmar_exclusao_dentista"),
-    path('financeiro', financeiro),
+    path('financeiro', financeiro, name="financeiro"),
     path('financeiro/', cadastrar_transacao, name="cadastrar_transacao"),
     path('editar_receita/<int:receita_id>/', editar_receita, name="editar_receita"),
     path('excluir_receita/<int:receita_id>/', excluir_receita, name="excluir_receita"),

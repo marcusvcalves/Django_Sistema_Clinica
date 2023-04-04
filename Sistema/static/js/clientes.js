@@ -17,7 +17,7 @@ function cepMascara(cep) {
     }
 }
 
-const input = document.getElementById('Cpf');
+const input = document.getElementById('cpf');
 
 input.addEventListener('keypress', () => {
     let inputLength = input.value.length;

@@ -1,5 +1,5 @@
 from .models import Cliente, Receita, Despesa, Event, Dentista
-from django.db.models import Sum, F
+from django.db.models import Sum, F, Q
 from django.db.models.functions import Coalesce
 from django.db.models.fields import DecimalField
 from django.http import HttpResponseRedirect, JsonResponse
@@ -8,8 +8,7 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from datetime import datetime
-from decimal import Decimal
+from datetime import datetime, timedelta
 
 def login_view(request):
     if request.method == "POST":
@@ -59,7 +58,7 @@ def home(request):
 
 @login_required(login_url='/login')
 def clientes(request):
-    p = Paginator(Cliente.objects.get_queryset().order_by('id'), 10)
+    p = Paginator(Cliente.objects.get_queryset().order_by('-id'), 10)
     page = request.GET.get('page')
     clientes = p.get_page(page)
 
@@ -132,7 +131,7 @@ def confirmar_exclusao(request, cliente_id):
 
 @login_required(login_url='/login')
 def dentistas(request):
-    p = Paginator(Dentista.objects.get_queryset().order_by('id'), 10)
+    p = Paginator(Dentista.objects.get_queryset().order_by('-id'), 10)
     page = request.GET.get('page')
     dentistas = p.get_page(page)
 
@@ -204,22 +203,44 @@ def confirmar_exclusao_dentista(request, dentista_id):
 
 @login_required(login_url='/login')
 def financeiro(request):
-    pReceita = Paginator(Receita.objects.get_queryset().order_by('id'),10)
-    pDespesa = Paginator(Despesa.objects.get_queryset().order_by('id'),10)
+    pReceita = Paginator(Receita.objects.get_queryset().order_by('-date'),10)
+    pDespesa = Paginator(Despesa.objects.get_queryset().order_by('-date'),10)
     dentistas = Dentista.objects.all().order_by('name')
     page = request.GET.get('page')
     pg = request.GET.get('pg')
     receita = pReceita.get_page(page)
     despesa = pDespesa.get_page(pg)
     tab_shown = "receita" if page else "despesa" if pg else "receita"
-    context = {
-        "receita": receita,
-        "despesa": despesa,
-        "tab_shown": tab_shown,
-        "dentistas": dentistas
-    }
 
-    return render(request, "financeiro/financeiro.html", context)
+    
+    if 'sort' in request.GET:
+        sort = request.GET.get('sort')
+        if sort == "0":
+            pReceita = Paginator(Receita.objects.get_queryset().order_by('-date'),10)
+            receita = pReceita.get_page(page)
+        if sort == "1":
+            pReceita = Paginator(Receita.objects.get_queryset().order_by('-date').filter(pago=False),10)
+            receita = pReceita.get_page(page)
+            
+        context = {
+            'sort' : sort,
+            "receita": receita,
+            "despesa": despesa,
+            "tab_shown": tab_shown,
+            "dentistas": dentistas,
+            }
+        return render(request, "financeiro/financeiro.html", context)
+    else:
+        context = {
+            "receita": receita,
+            "despesa": despesa,
+            "tab_shown": tab_shown,
+            "dentistas": dentistas,
+        }
+
+        return render(request, "financeiro/financeiro.html", context)
+
+
 
 @login_required(login_url='/login')
 def cadastrar_transacao(request):
