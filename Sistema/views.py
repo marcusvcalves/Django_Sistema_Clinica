@@ -40,18 +40,24 @@ def home(request):
     receitaTotal = Receita.objects.filter(date__month=date.strftime("%m"), date__year=date.strftime("%Y")).aggregate(total=Coalesce(Sum(F('value')), 0, output_field=DecimalField()))
     despesaTotal = Despesa.objects.filter(date__month=date.strftime("%m"), date__year=date.strftime("%Y")).aggregate(total=Coalesce(Sum(F('value')), 0, output_field=DecimalField()))
     todayEvents = Event.objects.filter(start__day=date.strftime("%d"), start__month=date.strftime("%m"), start__year=date.strftime("%Y"))
+    monthEvents = Event.objects.filter(start__gte=date)
+
     eventsTodayCount = 0
     for i in todayEvents:
         eventsTodayCount += 1
 
+    eventsMonthCount = 0
+    for i in monthEvents:
+        eventsMonthCount += 1
 
-    
+
     context = {
         'totalClientes': totalClientes,
         'totalDentistas': totalDentistas,
         'receitaTotal': receitaTotal['total'],
         'despesaTotal': despesaTotal['total'],
         'eventsTodayCount': eventsTodayCount,
+        'eventsMonthCount': eventsMonthCount
     }
     return render(request, "home/index.html", context)
 
@@ -221,6 +227,26 @@ def financeiro(request):
         if sort == "1":
             pReceita = Paginator(Receita.objects.get_queryset().order_by('-date').filter(pago=False),10)
             receita = pReceita.get_page(page)
+        if sort == "2":
+            pReceita = Paginator(Receita.objects.get_queryset().order_by('date'),10)
+            pDespesa = Paginator(Despesa.objects.get_queryset().order_by('date'),10)
+            receita = pReceita.get_page(page)
+            despesa = pDespesa.get_page(pg)
+        if sort == "3":
+            pReceita = Paginator(Receita.objects.get_queryset().order_by('-date'),10)
+            pDespesa = Paginator(Despesa.objects.get_queryset().order_by('-date'),10)
+            receita = pReceita.get_page(page)
+            despesa = pDespesa.get_page(pg)
+        if sort == "4":
+            pReceita = Paginator(Receita.objects.get_queryset().order_by('value'),10)
+            pDespesa = Paginator(Despesa.objects.get_queryset().order_by('value'),10)
+            receita = pReceita.get_page(page)
+            despesa = pDespesa.get_page(pg)
+        if sort == "5":
+            pReceita = Paginator(Receita.objects.get_queryset().order_by('-value'),10)
+            pDespesa = Paginator(Despesa.objects.get_queryset().order_by('-value'),10)
+            receita = pReceita.get_page(page)
+            despesa = pDespesa.get_page(pg)
             
         context = {
             'sort' : sort,

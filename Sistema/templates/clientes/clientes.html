@@ -173,7 +173,7 @@
               <td>{{cliente.cpf}}</td>
               <td>{{cliente.cep}}</td>
               <td>{{cliente.birthDate|date:"d/m/Y"}}</td>
-              <td>{{cliente.gender}}</td>
+              <td>{{cliente.gender|default_if_none:""}}</td>
               <td><a class="btn btn-primary" href="{% url 'editar_usuario' cliente.id %}">Editar</a></td>
             </tr>
             {% endfor %}

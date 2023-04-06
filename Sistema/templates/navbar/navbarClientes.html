@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link
     href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css"
     rel="stylesheet"
@@ -26,22 +26,22 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-              <li class="nav-item">
-                  <a class="nav-link active" href="/"><i class="bx bxs-dashboard"></i> Home</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active" href="/clientes"><i class="bx bx-user"></i> Clientes</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/dentistas"><i class="bx bx-id-card"></i> Dentistas</a>
+          <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'home' %}"><i class="bx bxs-dashboard"></i> Home</a>
             </li>
-              <li class="nav-item">
-                  <a class="nav-link active" href="/financeiro"><i class="bx bx-dollar"></i> Financeiro</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active" href="/agenda"><i class="bx bx-calendar"></i> Agenda</a>
-              </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'clientes' %}"><i class="bx bx-user"></i> Clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'dentistas' %}"><i class="bx bx-id-card"></i> Dentistas</a>
+          </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'financeiro' %}"><i class="bx bx-dollar"></i> Financeiro</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'agenda' %}"><i class="bx bx-calendar"></i> Agenda</a>
+            </li>
             </ul>
             <ul class="navbar-nav mx-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
               <form class="d-flex" method="get">
@@ -52,13 +52,10 @@
               </form>
             </ul>
             <ul class="navbar-nav ml-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-              {% if user.is_authenticated %}
               <li class="nav-item me-2">
-                <a class="nav-link active" href="logout">Logout <i class="bx bx-log-out"></i></a>
+                <a class="nav-link active" href="{% url 'logout' %}">Logout <i class="bx bx-log-out"></i></a>
               </li>
-              {% endif %}
             </ul>
-
         </div>
         </div>
     </nav>

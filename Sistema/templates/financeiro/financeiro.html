@@ -110,9 +110,29 @@
                 <option value="0">Mostrar todos valores</option>
                 {% endif %}
                 {% if sort == "1" %}
-                <option value="1" selected>Mostrar receitas não pagas</option>
+                <option value="1" selected>Mostrar apenas receitas não pagas</option>
                 {% else %}
-                <option value="1">Mostrar receitas não pagas</option>
+                <option value="1">Mostrar apenas receitas não pagas</option>
+                {% endif %}
+                {% if sort == "2" %}
+                <option value="2" selected>Ordenar por data crescente</option>
+                {% else %}
+                <option value="2">Ordenar por data crescente</option>
+                {% endif %}
+                {% if sort == "3" %}
+                <option value="3" selected>Ordenar por data decrescente</option>
+                {% else %}
+                <option value="3">Ordenar por data decrescente</option>
+                {% endif %}
+                {% if sort == "4" %}
+                <option value="4" selected>Ordenar por valor crescente</option>
+                {% else %}
+                <option value="4">Ordenar por valor crescente</option>
+                {% endif %}
+                {% if sort == "5" %}
+                <option value="5" selected>Ordenar por valor decrescente</option>
+                {% else %}
+                <option value="5">Ordenar por valor decrescente</option>
                 {% endif %}
               </select>
             </div>
