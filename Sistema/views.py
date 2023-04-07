@@ -39,7 +39,7 @@ def home(request):
     totalDentistas = Dentista.objects.count()
     receitaTotal = Receita.objects.filter(date__month=date.strftime("%m"), date__year=date.strftime("%Y")).aggregate(total=Coalesce(Sum(F('value')), 0, output_field=DecimalField()))
     despesaTotal = Despesa.objects.filter(date__month=date.strftime("%m"), date__year=date.strftime("%Y")).aggregate(total=Coalesce(Sum(F('value')), 0, output_field=DecimalField()))
-    todayEvents = Event.objects.filter(start__day=date.strftime("%d"), start__month=date.strftime("%m"), start__year=date.strftime("%Y"))
+    todayEvents = Event.objects.filter(start__gte=date, start__day=date.strftime("%d"), start__month=date.strftime("%m"), start__year=date.strftime("%Y"))
     monthEvents = Event.objects.filter(start__gte=date)
 
     eventsTodayCount = 0
