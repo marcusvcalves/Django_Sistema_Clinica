@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from datetime import datetime, timedelta
+from datetime import datetime
 
 def login_view(request):
     if request.method == "POST":
@@ -179,21 +179,22 @@ def cadastrar_dentista(request):
 def editar_dentista(request, dentista_id):
     dentista = Dentista.objects.get(id=dentista_id)
     if request.method == 'POST':
-        if request.POST.get('clientName'):
-            dentista.name = request.POST.get('clientName')
-            dentista.phone = request.POST.get('clientPhone')
-            dentista.email = request.POST.get('clientEmail')
-            dentista.cpf = request.POST.get('clientCpf')
-            dentista.cep = request.POST.get('clientCep')
-            dentista.address = request.POST.get('clientAddress')
-            if (request.POST.get('clientBirth') == ""):
+        if request.POST.get('dentistName'):
+            dentista.name = request.POST.get('dentistName')
+            dentista.phone = request.POST.get('dentistPhone')
+            dentista.email = request.POST.get('dentistEmail')
+            dentista.cpf = request.POST.get('dentistCpf')
+            dentista.cep = request.POST.get('dentistCep')
+            dentista.address = request.POST.get('dentistAddress')
+            if (request.POST.get('dentistBirth') == ""):
                 dentista.birthDate = None
             else:
-                dentista.birthDate = request.POST.get('clientBirth')
-            dentista.gender = request.POST.get('clientGender')
+                dentista.birthDate = request.POST.get('dentistBirth')
+            dentista.gender = request.POST.get('dentistGender')
             dentista.save()
-            return HttpResponseRedirect('/clientes')
+            return HttpResponseRedirect('/dentistas')
     return render(request, "dentistas/editar_dentista.html", {'dentista': dentista})
+
 
 @login_required(login_url='/login')
 def excluir_dentista(request, dentista_id):
