@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
-class Cliente(models.Model):
+class Pessoa(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=100, blank=True)
     email = models.EmailField(max_length = 254, blank=True, null=True, default=None)
@@ -17,28 +17,19 @@ class Cliente(models.Model):
     gender = models.CharField(
         max_length=1, choices=GENDER, blank=True, null=True)
 
-    def __str__(self):
-        template = ' {0.name}, Telefone: {0.phone}, CPF: {0.cpf}, CEP: {0.cep},  Endereço: {0.address}, Data de Nascimento:{0.birthDate}, Gênero: {0.gender}'
-        return template.format(self)
-
-class Dentista(models.Model):
-    name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100, blank=True)
-    email = models.EmailField(max_length = 254, blank=True, null=True, default=None)
-    cpf = models.CharField(max_length=100, blank=True, null=True, default=None)
-    cep = models.CharField(max_length=100, blank=True)
-    address = models.CharField(max_length=100, blank=True)
-    birthDate = models.DateField(blank=True, null=True)
-    GENDER = (
-        ('M', 'Masculino'),
-        ('F', 'Feminino'),
-    )
-    gender = models.CharField(
-        max_length=1, choices=GENDER, blank=True, null=True)
+    class Meta:
+        abstract = True
 
     def __str__(self):
         template = ' {0.name}, Telefone: {0.phone}, CPF: {0.cpf}, CEP: {0.cep},  Endereço: {0.address}, Data de Nascimento:{0.birthDate}, Gênero: {0.gender}'
         return template.format(self)
+
+class Cliente(Pessoa):
+    ...
+
+
+class Dentista(Pessoa):
+    ...
 
 
 class Receita(models.Model):

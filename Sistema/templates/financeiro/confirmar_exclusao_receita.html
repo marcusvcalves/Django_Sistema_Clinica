@@ -26,9 +26,13 @@
     <h2>Gostaria de excluir esta receita?</h2>
     <ul>
       <li>Valor: {{receita.value}}</li>
-      <li>Dentista: {{receita.professional}}</li>
+      <li>Dentista: {{receita.dentista.name}}</li>
       <li>Descrição: {{receita.desc}}</li>
-      <li>Pago: {{receita.pago}}</li>
+      {% if receita.pago == True %}
+      <li>Pago: Sim</li>
+      {% elif receita.pago == False %}
+      <li>Pago: Não</li>
+      {% endif %}
     </ul>
     <input type="button" class="btn btn-primary" onclick="window.location.href='/financeiro'" value="Voltar"/>
     <a href="{% url 'excluir_receita' receita.id %}" id="delete-user-link" data-user-id="{{ receita.id }}">
