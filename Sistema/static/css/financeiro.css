@@ -2,7 +2,7 @@
     margin-top:2%;
 }
 a, a:visited { text-decoration: none; }
-.liActive{
+.page-link.liActive{
     background-color: #0D6EFD;
 	color: #fff;
 }

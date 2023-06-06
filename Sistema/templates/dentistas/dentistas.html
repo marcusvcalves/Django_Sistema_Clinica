@@ -180,41 +180,41 @@
           </table>
           <div class="paginationContainer">
             <ul class="pagination">
-                    {% if dentistas.has_previous %}
-                    <li class="page-item">
-                      <a class="page-link" href="?page=1" aria-label="Previous">
+                {% if dentistas.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% if q %}q={{ q }}&{% endif %}page=1" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                    {% else %}
-                    <li class="page-item disabled">
-                      <a class="page-link" href="?page=1" aria-label="Previous">
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="?{% if q %}q={{ q }}&{% endif %}page=1" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
+                    </a>
+                </li>
+                {% endif %}
+                {% for i in dentistas.paginator.page_range %}
+                    {% if dentistas.number == i %}
+                        <li class="page-link liActive"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% elif i > dentistas.number|add:'-5' and i < dentistas.number|add:'5' %}
+                        <li><a class="page-link" href="?{% if q %}q={{ q }}&{% endif %}page={{ i }}">{{ i }}</a></li>
                     {% endif %}
-                    {% for i in dentistas.paginator.page_range %}
-                        {% if dentistas.number == i %}
-                            <li class="page-link liActive"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                        {% elif i > dentistas.number|add:'-5' and i < dentistas.number|add:'5' %}
-                            <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                    {% if dentistas.has_next %}
-                    <li class="page-item">
-                      <a class="page-link" href="?page={{dentistas.paginator.num_pages}}" aria-label="Next">
+                {% endfor %}
+                {% if dentistas.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% if q %}q={{ q }}&{% endif %}page={{ dentistas.paginator.num_pages }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                    {% else %}
-                    <li class="page-item disabled">
-                      <a class="page-link" href="?page={{dentistas.paginator.num_pages}}" aria-label="Next">
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="?{% if q %}q={{ q }}&{% endif %}page={{ dentistas.paginator.num_pages }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                    {% endif %}
-                  </ul>
-          </div>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>        
         </div>
     </div>
     <script

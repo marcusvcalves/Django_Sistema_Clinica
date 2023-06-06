@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from urllib.parse import urlencode
 
 def login_view(request):
     if request.method == "POST":
@@ -64,19 +65,33 @@ def home(request):
 
 @login_required(login_url='/login')
 def clientes(request):
-    p = Paginator(Cliente.objects.get_queryset().order_by('-id'), 10)
-    page = request.GET.get('page')
-    clientes = p.get_page(page)
+    clientes = Cliente.objects.get_queryset().order_by('-id')
+    q = request.GET.get('q')
+    
+    if q:
+        clientes = clientes.filter(name__icontains=q)
 
-    if 'q' in request.GET:
-        q = request.GET.get('q')
-        clientes = Cliente.objects.all().filter(name__icontains=q)
-        context = {
-            'clientes' : clientes
-            }
-        return render(request, "clientes/clientes.html", context)
-    else:
-        return render(request, "clientes/clientes.html", {"clientes": clientes})
+    p = Paginator(clientes, 10)
+    page = request.GET.get('page')
+    clientes_paginados = p.get_page(page)
+
+
+    base_url = request.path
+    query_params = request.GET.copy()
+    query_params.pop('page', None)
+    pagination_links = []
+
+    for num in clientes_paginados.paginator.page_range:
+        query_params['page'] = num
+        url = f"{base_url}?{query_params.urlencode()}"
+        pagination_links.append(url)
+
+    context = {
+        'clientes': clientes_paginados,
+        'q': q,
+        'pagination_links': pagination_links,
+    }
+    return render(request, "clientes/clientes.html", context)
 
 
 
@@ -137,19 +152,33 @@ def confirmar_exclusao(request, cliente_id):
 
 @login_required(login_url='/login')
 def dentistas(request):
-    p = Paginator(Dentista.objects.get_queryset().order_by('-id'), 10)
-    page = request.GET.get('page')
-    dentistas = p.get_page(page)
+    dentistas = Dentista.objects.get_queryset().order_by('-id')
+    q = request.GET.get('q')
+    
+    if q:
+        dentistas = dentistas.filter(name__icontains=q)
 
-    if 'q' in request.GET:
-        q = request.GET.get('q')
-        dentistas = Dentista.objects.all().filter(name__icontains=q)
-        context = {
-            'dentistas' : dentistas
-            }
-        return render(request, "dentistas/dentistas.html", context)
-    else:
-        return render(request, "dentistas/dentistas.html", {"dentistas": dentistas})
+    p = Paginator(dentistas, 10)
+    page = request.GET.get('page')
+    dentistas_paginados = p.get_page(page)
+
+
+    base_url = request.path
+    query_params = request.GET.copy()
+    query_params.pop('page', None)
+    pagination_links = []
+
+    for num in dentistas_paginados.paginator.page_range:
+        query_params['page'] = num
+        url = f"{base_url}?{query_params.urlencode()}"
+        pagination_links.append(url)
+
+    context = {
+        'dentistas': dentistas_paginados,
+        'q': q,
+        'pagination_links': pagination_links,
+    }
+    return render(request, "dentistas/dentistas.html", context)
 
 @login_required(login_url='/login')
 def cadastrar_dentista(request):
